@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G-Math | מתמטיקה לכל</title>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--g-green:#4CAF50;--g-blue:#1565C0;--bg:#fff;--bg2:#f8f9fc;--tp:#1A1A2E;--ts:#555770;--tm:#6B6B80;--bd:#E8E8EE;--r:16px;--zoom:1;--card-bg:#fff;--hero-bg:linear-gradient(135deg,#E8F5E9 0%,#E3F2FD 50%,#F3E5F5 100%);--overlay-bg:rgba(255,255,255,.92);--shadow-c:rgba(0,0,0,.08);}
+
+html{font-size:calc(16px * var(--zoom));scroll-behavior:smooth;}
+body{font-family:'Rubik','Assistant',-apple-system,sans-serif;color:var(--tp);background:var(--bg);min-height:100vh;display:flex;flex-direction:column;padding-bottom:52px;font-size:17px;line-height:1.6;}
+a{text-decoration:none;color:inherit;cursor:pointer;}
+.page{display:none;flex:1;opacity:0;transition:opacity .25s ease;}.page.active{display:flex;flex-direction:column;flex:1;opacity:1;}
+
+/* ─── HEADER ─── */
+.hdr{position:sticky;top:0;z-index:100;background:var(--overlay-bg);backdrop-filter:blur(12px);border-bottom:1px solid var(--bd);padding:12px 28px;display:flex;align-items:center;}
+.logo{display:flex;align-items:baseline;gap:2px;font-size:1.45rem;font-weight:700;cursor:pointer;}
+.lg{color:var(--g-green);}.lm{color:var(--g-blue);}
+.lt{font-size:.78rem;color:var(--tm);margin-inline-start:10px;font-weight:400;}
+
+/* ─── STICKY FOOTER ─── */
+.ftr{position:fixed;bottom:0;left:0;right:0;z-index:100;background:var(--overlay-bg);backdrop-filter:blur(10px);border-top:1px solid var(--bd);padding:10px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
+.fb{font-size:.85rem;color:var(--tm);}.fb b{color:var(--g-blue);}
+.fn{display:flex;gap:12px;}.fn a{font-size:.82rem;color:var(--ts);}.fn a:hover{color:var(--g-blue);}
+.ft{display:flex;align-items:center;gap:8px;}
+.zg{display:flex;align-items:center;gap:4px;background:#f0f4f8;padding:3px 8px;border-radius:7px;}
+.zl{font-size:.72rem;color:#64748b;font-weight:600;}
+.zb{width:24px;height:24px;display:flex;align-items:center;justify-content:center;background:#e2e8f0;border:none;border-radius:5px;font-size:.9rem;color:#475569;cursor:pointer;font-weight:bold;font-family:inherit;transition:all .15s;}
+.zb:hover:not(:disabled){background:#cbd5e1;}.zb:disabled{color:#94a3b8;cursor:not-allowed;background:#f1f5f9;}
+.zp{font-size:.72rem;font-weight:700;min-width:32px;text-align:center;color:#1e293b;}
+.dv{width:1px;height:18px;background:#dde1e7;}
+.ls{display:flex;gap:2px;}
+.lb{padding:3px 9px;border-radius:5px;font-size:.62rem;border:none;cursor:pointer;font-weight:600;font-family:inherit;transition:all .15s;}
+.lb.on{background:var(--g-blue);color:#fff;}.lb:not(.on){background:#e2e8f0;color:#475569;}.lb:hover:not(.on){background:#cbd5e1;}
+
+/* ─── HERO ─── */
+.hero{position:relative;background:var(--hero-bg);padding:52px 28px 68px;text-align:center;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 45%,rgba(76,175,80,.13) 0%,transparent 60%),radial-gradient(ellipse at 80% 35%,rgba(21,101,192,.1) 0%,transparent 60%),radial-gradient(ellipse at 50% 90%,rgba(156,39,176,.07) 0%,transparent 50%);}
+.hc{position:relative;z-index:2;}
+.hero h1{font-size:2.6rem;font-weight:700;margin-bottom:10px;letter-spacing:-.02em;}.hero h1 span{background:linear-gradient(135deg,var(--g-blue),#7c3aed);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero .sub{font-size:1.1rem;color:var(--ts);max-width:520px;margin:0 auto 24px;line-height:1.7;}
+.stb{display:inline-flex;gap:24px;padding:12px 28px;background:rgba(255,255,255,.6);backdrop-filter:blur(12px);border-radius:12px;border:1px solid rgba(255,255,255,.7);font-size:.95rem;color:var(--ts);font-weight:500;}.stb strong{color:var(--g-blue);font-weight:700;}
+.trust{display:flex;gap:14px;justify-content:center;padding:0 24px;margin-top:-40px;position:relative;z-index:5;flex-wrap:wrap;}
+.trust-card{flex:1;max-width:240px;background:var(--card-bg);border-radius:14px;padding:20px 16px;text-align:center;box-shadow:0 8px 28px var(--shadow-c);border:1.5px solid var(--bd);transition:all .3s;}
+.trust-card:hover{transform:translateY(-4px);box-shadow:0 12px 36px rgba(67,97,238,.16);border-color:rgba(67,97,238,.2);}
+.trust-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin:0 auto 10px;}
+.trust-card:nth-child(1) .trust-icon{background:linear-gradient(135deg,#E8F5E9,#C8E6C9);}
+.trust-card:nth-child(2) .trust-icon{background:linear-gradient(135deg,#E3F2FD,#BBDEFB);}
+.trust-card:nth-child(3) .trust-icon{background:linear-gradient(135deg,#FFF3E0,#FFE0B2);}
+.trust-text{font-size:.88rem;font-weight:500;color:#334155;line-height:1.5;}
+.sym{position:absolute;font-size:1.4rem;opacity:.15;font-weight:700;z-index:1;animation:drift 12s ease-in-out infinite alternate;}
+@keyframes drift{0%{transform:translateY(0) rotate(0deg)}100%{transform:translateY(-18px) rotate(8deg)}}
+
+/* ─── HOME GRID ─── */
+.tsc{padding:40px 28px 48px;max-width:1200px;margin:0 auto;width:100%;}
+.tsc h2{font-size:1.6rem;text-align:center;margin-bottom:28px;}
+.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.tc{background:var(--card-bg);border:1px solid var(--bd);border-radius:var(--r);padding:22px 18px;display:flex;align-items:flex-start;gap:12px;transition:all .25s cubic-bezier(.4,0,.2,1);cursor:pointer;position:relative;overflow:hidden;}
+.tc:hover{transform:translateY(-4px);box-shadow:0 8px 30px rgba(0,0,0,.12);}
+.tc::before{content:'';position:absolute;inset-inline-start:0;top:0;bottom:0;width:4px;background:var(--cc);opacity:0;transition:opacity .25s;}.tc:hover::before{opacity:1;}
+.tci{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.tcn h3{font-size:1.05rem;font-weight:600;margin-bottom:3px;}.tcn p{font-size:.85rem;color:var(--tm);line-height:1.5;}
+
+/* ─── BREADCRUMB ─── */
+.bc{padding:12px 28px;font-size:.9rem;color:var(--tm);display:flex;align-items:center;gap:7px;flex-wrap:wrap;border-bottom:1px solid var(--bd);background:var(--bg2);}
+.bc a{color:var(--g-blue);}.bc a:hover{text-decoration:underline;}
+.bc .s{color:#ccc;}
+
+/* ─── TOPIC PAGE: TABS ─── */
+.ttabs{display:flex;gap:5px;padding:10px 28px;overflow-x:auto;border-bottom:1px solid var(--bd);background:var(--bg);scrollbar-width:none;}.ttabs::-webkit-scrollbar{display:none;}
+.tt{padding:7px 14px;border-radius:9px;font-size:.73rem;font-weight:500;cursor:pointer;white-space:nowrap;border:1px solid var(--bd);background:var(--bg);transition:all .2s;display:flex;align-items:center;gap:4px;}
+.tt:hover{background:#f5f7fa;}.tt.on{color:#fff;border-color:transparent;}
+
+/* ─── TOPIC PAGE: CHIPS + SCROLL LAYOUT ─── */
+.tp-wrap{flex:1;overflow-y:auto;}
+.tp-header{display:flex;align-items:center;gap:14px;padding:20px 28px 12px;}
+.tp-hicon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;}
+.tp-header h2{font-size:1.2rem;font-weight:700;}.tp-header .cnt{font-size:.82rem;color:var(--tm);margin-top:1px;}
+.tp-bar{display:flex;align-items:center;gap:10px;padding:10px 28px 14px;flex-wrap:wrap;position:sticky;top:0;background:var(--overlay-bg);backdrop-filter:blur(10px);z-index:10;border-bottom:1px solid var(--bd);}
+.tp-search{position:relative;flex-shrink:0;}
+.tp-si{padding:8px 14px 8px 32px;border:1.5px solid var(--bd);border-radius:10px;font-size:.82rem;font-family:inherit;outline:none;width:220px;transition:all .2s;direction:inherit;background:var(--bg);}
+.tp-si:focus{border-color:var(--g-blue);box-shadow:0 0 0 3px rgba(21,101,192,.08);width:260px;}
+.tp-search::before{content:'🔍';position:absolute;inset-inline-start:10px;top:50%;transform:translateY(-50%);font-size:.7rem;pointer-events:none;z-index:1;}
+.tp-si{padding-inline-start:32px !important;}
+.tp-empty{text-align:center;padding:48px 28px;color:var(--tm);font-size:.9rem;}
+/* ─── TOPIC NAV — Tabs embedded in banner image (OpenU style) ─── */
+.tp-banner{padding:0;position:relative;overflow:hidden;}
+.tp-banner-bg{width:100%;height:220px;display:block;}
+.tp-nav-bar{position:absolute;bottom:0;left:0;right:0;z-index:2;display:flex;justify-content:center;}
+.tp-nav{display:flex;gap:0;overflow-x:auto;scrollbar-width:none;width:100%;max-width:1100px;margin:0 auto;}
+.tp-nav::-webkit-scrollbar{display:none;}
+.tp-nav-btn{flex:1 1 0;min-width:0;cursor:pointer;padding:0;border:none;position:relative;transition:background .35s;}
+.tp-nav-btn+.tp-nav-btn{border-right:1px solid rgba(255,255,255,.15);}
+.tp-nav-link{display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;height:72px;width:100%;padding:6px 4px;background:rgba(255,255,255,.85);transition:background .35s;}
+.tp-nav-btn:hover .tp-nav-link{background:var(--nav-c,#002C7D);}
+.tp-nav-btn.on .tp-nav-link{background:var(--nav-c,#002C7D);}
+.tp-nav-icon{font-size:1.5rem;transition:color .35s;color:var(--nav-c,#2364db);line-height:1;margin-bottom:4px;}
+.tp-nav-btn.on .tp-nav-icon,.tp-nav-btn:hover .tp-nav-icon{color:#fff;}
+.tp-nav-label{font-size:.85rem;font-weight:600;color:#2364db;white-space:nowrap;text-align:center;overflow:hidden;text-overflow:ellipsis;max-width:100%;line-height:1.2;transition:color .35s;}
+.tp-nav-btn.on .tp-nav-label{color:#fff;font-weight:700;}
+.tp-nav-btn:hover .tp-nav-label{color:#fff;}
+@media(max-width:767px){.tp-nav-link{height:66px;}.tp-nav-label{font-size:.75rem;}}
+/* ─── SUBTOPIC GRID CARDS (Option A — Hover Expand) ─── */
+.tp-grid{padding:20px 28px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;align-items:start;}
+.tp-card{background:var(--card-bg);border:2px solid var(--bd);border-radius:18px;cursor:pointer;transition:all .35s;position:relative;overflow:hidden;display:flex;flex-direction:column;z-index:1;}
+.tp-card:hover{border-color:#a5b4fc;box-shadow:0 8px 28px rgba(0,0,0,.1);z-index:200;}
+.tp-card-img{height:140px;border-radius:16px 16px 0 0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.tp-card-img::after{content:'';position:absolute;bottom:-1px;left:-5%;right:-5%;height:24px;background:var(--card-bg);border-radius:50% 50% 0 0;}
+.tp-card-img svg{width:70px;height:70px;opacity:.85;}
+.tp-card-img .tp-overlay{font-size:2.6rem;position:absolute;z-index:2;filter:drop-shadow(0 2px 6px rgba(0,0,0,.15));color:#fff;font-weight:700;font-family:serif;}
+.tp-card-body{padding:14px 16px 12px;text-align:center;}
+.tp-card-name{font-size:1.05rem;font-weight:700;line-height:1.3;margin-bottom:4px;}
+.tp-card-meta{font-size:.8rem;color:var(--tm);display:flex;align-items:center;justify-content:center;gap:6px;}
+.tp-card-dot{width:8px;height:8px;border-radius:50%;opacity:.25;transition:opacity .2s;}
+.tp-card:hover .tp-card-dot{opacity:1;}
+/* Lessons expand from inside the card on hover */
+.tp-card-lessons{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);}
+.tp-card:hover .tp-card-lessons{max-height:500px;}
+.tp-card-lessons-inner{padding:0 14px 14px;border-top:1.5px solid #e0e7ff;margin-top:4px;padding-top:10px;}
+.tp-card-lessons-inner h4{font-size:.82rem;font-weight:700;margin-bottom:8px;text-align:start;}
+.tp-llist{display:flex;flex-wrap:wrap;gap:7px;}
+.tp-lbtn{padding:8px 13px;border-radius:10px;background:#f8f9ff;border:1.5px solid #e0e7ff;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.tp-lbtn:hover{color:#fff;border-color:transparent;}
+.tp-lbtn .tp-pc{font-size:.68rem;opacity:.5;white-space:nowrap;}
+
+/* ─── ABOUT-MATH CARDS (now uses tp-card style — direct click, no expand) ─── */
+.tp-card-direct{cursor:pointer;}
+.tp-card-direct:hover{transform:translateY(-6px);box-shadow:0 12px 36px rgba(0,0,0,.14);}
+
+/* ─── HOME ABOUT SECTION ─── */
+.about-sec{max-width:1100px;margin:0 auto;padding:48px 28px 12px;display:flex;align-items:center;gap:40px;}
+.about-img{flex-shrink:0;width:280px;height:280px;border-radius:24px;overflow:hidden;position:relative;background:linear-gradient(145deg,#e8f5e9 0%,#c8e6c9 40%,#a5d6a7 100%);display:flex;align-items:flex-end;justify-content:center;}
+.about-img svg{width:100%;height:100%;}
+.about-txt{flex:1;min-width:0;}
+.about-txt h2{font-size:1.5rem;font-weight:700;margin-bottom:14px;color:var(--tp);letter-spacing:-.01em;line-height:1.4;}
+.about-txt h2 span{color:var(--g-blue);}
+.about-txt p{font-size:.95rem;color:var(--ts);line-height:1.8;margin-bottom:18px;}
+.about-btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;background:linear-gradient(135deg,var(--g-green),#43a047);color:#fff;border-radius:12px;font-size:.92rem;font-weight:600;border:none;cursor:pointer;font-family:inherit;transition:all .25s;box-shadow:0 4px 16px rgba(76,175,80,.25);}
+.about-btn:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(76,175,80,.35);}
+.about-btn:active{transform:scale(.97);}
+.about-btn svg{width:18px;height:18px;fill:#fff;}
+@media(max-width:768px){.about-sec{flex-direction:column;text-align:center;padding:32px 14px 8px;gap:24px;}.about-img{width:200px;height:200px;}.about-btn{width:100%;justify-content:center;}}
+
+/* ─── LESSON PAGE ─── */
+.lp-wrap{position:relative;flex:1;display:flex;flex-direction:column;min-height:60vh;}
+.lp-title{padding:18px 28px;background:var(--bg);border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+.lp-title h2{font-size:1.35rem;font-weight:700;}
+.pb{padding:4px 12px;background:#e3f2fd;color:var(--g-blue);border-radius:8px;font-size:.82rem;font-weight:600;}
+.vf{background:#f5f7fa;border:1px solid var(--bd);border-radius:12px;min-height:320px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px;color:var(--tm);font-size:.9rem;margin:20px 28px;position:relative;}.vf .vi{font-size:3rem;opacity:.4;}
+.vf-slide{position:absolute;top:12px;inset-inline-start:16px;padding:4px 12px;background:var(--bg);border:1px solid var(--bd);border-radius:7px;font-size:.7rem;font-weight:600;color:var(--ts);}
+.vf:fullscreen{margin:0;border-radius:0;min-height:100vh;background:#fff;}
+.vf:-webkit-full-screen{margin:0;border-radius:0;min-height:100vh;background:#fff;}
+.vc{display:flex;align-items:center;justify-content:space-between;padding:12px 28px;border-top:1px solid var(--bd);background:var(--bg);flex-wrap:wrap;gap:8px;margin-top:auto;}
+.pn-row{display:flex;align-items:center;gap:8px;}
+.pn-row .nb{padding:5px 12px;font-size:.78rem;border-radius:7px;}
+.dn{display:flex;gap:6px;}
+.db{width:28px;height:28px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);font-size:.75rem;cursor:pointer;font-weight:600;font-family:inherit;transition:all .2s;}.db.on{background:var(--g-blue);color:#fff;border-color:var(--g-blue);}
+.va{display:flex;gap:8px;}
+.ab{padding:6px 14px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);cursor:pointer;font-size:.8rem;font-family:inherit;transition:all .2s;display:flex;align-items:center;gap:5px;}.ab:hover{background:#f0f4ff;}
+.ls-btn{padding:6px 14px;border-radius:8px;border:1px solid var(--g-blue);background:#eef2ff;color:var(--g-blue);font-size:.78rem;cursor:pointer;font-family:inherit;font-weight:600;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.ls-btn:hover{background:var(--g-blue);color:#fff;}
+.nb{padding:8px 20px;border-radius:10px;border:1px solid var(--bd);background:var(--bg);cursor:pointer;font-size:.85rem;font-weight:500;font-family:inherit;transition:all .2s;}.nb:hover:not(:disabled){background:#f0f4ff;border-color:var(--g-blue);}.nb:disabled{opacity:.35;cursor:not-allowed;}
+.nc{font-size:.78rem;color:var(--tm);font-weight:600;}
+/* ─── OVERLAY PANEL ─── */
+.ov-back{position:absolute;inset:0;background:rgba(15,23,42,.18);backdrop-filter:blur(2px);opacity:0;pointer-events:none;transition:opacity .3s;z-index:40;}
+.ov-back.show{opacity:1;pointer-events:auto;}
+.ov-panel{position:absolute;top:0;bottom:0;inset-inline-start:0;width:300px;background:var(--bg);border-inline-end:1px solid var(--bd);box-shadow:6px 0 32px rgba(0,0,0,.1);z-index:45;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
+[dir=ltr] .ov-panel{transform:translateX(-100%);}
+.ov-panel.show{transform:translateX(0);}
+.ov-hdr{padding:16px 18px;border-bottom:1px solid var(--bd);display:flex;align-items:center;justify-content:space-between;}
+.ov-hdr h4{font-size:.9rem;font-weight:700;display:flex;align-items:center;gap:8px;}
+.ov-close{width:30px;height:30px;border-radius:8px;border:1px solid var(--bd);background:var(--bg);cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center;font-family:inherit;transition:all .2s;color:var(--ts);}
+.ov-close:hover{background:#fee2e2;border-color:#fca5a5;color:#dc2626;}
+.ov-srch{padding:10px 14px;}
+.ov-srch input{width:100%;padding:8px 14px;border-radius:8px;border:1px solid var(--bd);font-size:.8rem;font-family:inherit;outline:none;transition:border .2s;}
+.ov-srch input:focus{border-color:var(--g-blue);}
+.ov-list{flex:1;overflow-y:auto;padding:6px 10px;}
+.ov-it{padding:12px 14px;border-radius:12px;cursor:pointer;font-size:.82rem;margin-bottom:5px;transition:all .25s;border:1.5px solid transparent;display:flex;align-items:flex-start;gap:12px;}
+.ov-it:hover{background:#f8f9ff;border-color:#e0e7ff;}
+.ov-it.on{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border-color:var(--g-blue);box-shadow:0 2px 8px rgba(67,97,238,.1);}
+.ov-it-num{width:28px;height:28px;border-radius:8px;background:#f1f5f9;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:var(--ts);flex-shrink:0;}
+.ov-it.on .ov-it-num{background:var(--g-blue);color:#fff;}
+.ov-it-info{flex:1;min-width:0;}
+.ov-it-name{font-weight:600;margin-bottom:2px;overflow:hidden;text-overflow:ellipsis;}
+.ov-it.on .ov-it-name{color:var(--g-blue);}
+.ov-it-meta{font-size:.72rem;color:var(--tm);display:flex;align-items:center;gap:8px;}
+.ov-now{font-size:.6rem;background:var(--g-blue);color:#fff;padding:2px 6px;border-radius:4px;font-weight:600;}
+
+/* ─── BADGE ─── */
+.dbg{display:none;}
+
+/* ─── ACCESSIBILITY: Focus Visible ─── */
+*:focus-visible{outline:3px solid #4A90D9;outline-offset:2px;border-radius:4px;}
+.tp-nav-btn:focus-visible .tp-nav-link{outline:3px solid #fff;outline-offset:-3px;border-radius:0;}
+.tp-card:focus-visible{border-color:#4A90D9;box-shadow:0 0 0 3px rgba(74,144,217,.3);}
+.tc:focus-visible{border-color:#4A90D9;box-shadow:0 0 0 3px rgba(74,144,217,.3);transform:translateY(-4px);}
+.tp-lbtn:focus-visible{outline:3px solid #4A90D9;outline-offset:1px;}
+.ov-it:focus-visible{border-color:#4A90D9;background:#f0f4ff;}
+.skip-link{position:absolute;top:-100px;left:50%;transform:translateX(-50%);background:var(--g-blue);color:#fff;padding:10px 20px;border-radius:0 0 8px 8px;z-index:9999;font-size:.9rem;font-weight:600;transition:top .2s;}
+.skip-link:focus{top:0;}
+
+/* ─── BACK NAV ─── */
+.tp-back{display:flex;align-items:center;gap:6px;padding:10px 28px 0;font-size:.85rem;color:var(--g-blue);cursor:pointer;font-weight:500;transition:color .2s;width:fit-content;}
+.tp-back:hover{color:#1040a0;text-decoration:underline;}
+.tp-back svg{width:16px;height:16px;fill:currentColor;}
+
+/* ─── MOBILE TOUCH: Card expansion via tap ─── */
+.tp-card.expanded .tp-card-lessons{max-height:500px;}
+@media(hover:none){.tp-card:hover .tp-card-lessons{max-height:0;}.tp-card.expanded .tp-card-lessons{max-height:500px;}}
+
+/* ─── TOUCH TARGETS ─── */
+.tp-lbtn{min-height:44px;min-width:44px;display:inline-flex;align-items:center;}
+
+/* ─── MICROINTERACTIONS: Active/Press States ─── */
+.tc:active,.tp-card:active,.trust-card:active,.tp-lbtn:active,.nb:active,.ab:active,.ls-btn:active,.lb:active,.zb:active{transform:scale(.96) !important;transition:transform .1s;}
+.tp-nav-btn:active .tp-nav-link{filter:brightness(.9);}
+
+/* ─── SCROLL-TRIGGERED ENTRANCE ANIMATIONS ─── */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity .5s cubic-bezier(.4,0,.2,1),transform .5s cubic-bezier(.4,0,.2,1);}
+.fade-in.visible{opacity:1;transform:translateY(0);}
+.fade-in-stagger{transition-delay:calc(var(--si,0) * 80ms);}
+
+/* ─── PREFERS-REDUCED-MOTION ─── */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;scroll-behavior:auto !important;}
+  .fade-in{opacity:1;transform:none;}
+  .sym{animation:none;opacity:.08;}
+  .page{transition:none;}.page.active{opacity:1;}
+}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:900px){.tg{grid-template-columns:repeat(2,1fr);}.tp-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}.ov-panel{width:85%;}.vf{margin:14px 16px;min-height:250px;}}
+@media(max-width:600px){.hdr{padding:10px 14px;}.lt{display:none;}.hero{padding:36px 14px 56px;}.hero h1{font-size:1.7rem;}.stb{gap:14px;padding:10px 18px;font-size:.78rem;}.trust{flex-direction:column;align-items:center;margin-top:-32px;padding:0 14px;}.trust-card{max-width:100%;width:100%;}.tsc{padding:28px 14px;}.tg{grid-template-columns:1fr;}.ftr{padding:8px 12px;justify-content:center;text-align:center;}.bc,.ttabs,.tp-search,.tp-main,.lp-title,.vc{padding-inline:14px;}.vf{margin:10px 14px;}}
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+
+<header class="hdr" role="banner"><div class="logo" onclick="goHome()" tabindex="0" role="button" aria-label="חזרה לדף הבית"><span class="lg">G</span><span class="lm">Math</span><span class="lt" id="tagline">מתמטיקה לכל</span></div></header>
+
+<!-- ═══ HOME ═══ -->
+<div class="page active" id="p-home" role="main">
+  <div id="main-content"></div>
+  <section class="hero">
+    <span class="sym" style="top:12%;right:8%;color:#4CAF50">∫</span><span class="sym" style="top:18%;right:25%;color:#1565C0;animation-delay:-2s">π</span><span class="sym" style="top:8%;left:15%;color:#9C27B0;animation-delay:-4s">Σ</span><span class="sym" style="top:25%;left:8%;color:#FF9800;animation-delay:-6s">△</span><span class="sym" style="bottom:20%;right:12%;color:#E91E63;animation-delay:-3s">∞</span><span class="sym" style="bottom:15%;left:20%;color:#00BCD4;animation-delay:-5s">√</span>
+    <div class="hc">
+      <h1 id="hero-t">למדו מתמטיקה עם <span>GMath</span></h1>
+      <p class="sub" id="hero-s">מצגות, דפי עבודה ופעילויות אינטראקטיביות — הכל במקום אחד, בחינם.</p>
+      <div class="stb"><span><strong>9</strong> <span class="tw">נושאים</span></span><span><strong>26</strong> <span class="sw">תתי-נושאים</span></span><span><strong>70+</strong> <span class="lw">שיעורים</span></span></div>
+    </div>
+  </section>
+  <div class="trust">
+    <div class="trust-card fade-in" style="--si:0"><div class="trust-icon">🏛️</div><div class="trust-text" id="tr1">האתר מאושר על ידי משרד החינוך</div></div>
+    <div class="trust-card fade-in" style="--si:1"><div class="trust-icon">🎁</div><div class="trust-text" id="tr2">כל תכני האתר נגישים בחינם</div></div>
+    <div class="trust-card fade-in" style="--si:2"><div class="trust-icon">📚</div><div class="trust-text" id="tr3">ריכוז עצום של שיעורים ומצגות לכל הרמות</div></div>
+  </div>
+
+  <!-- ─── ABOUT SECTION ─── -->
+  <section class="about-sec fade-in" style="--si:0">
+    <div class="about-img" aria-hidden="true">
+      <svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+        <!-- Ground -->
+        <ellipse cx="140" cy="268" rx="120" ry="12" fill="#a5d6a7" opacity=".4"/>
+        <!-- Trunk -->
+        <path d="M132 270 C132 220 128 180 134 160 Q138 148 140 140 Q142 148 146 160 C152 180 148 220 148 270Z" fill="#8d6e63"/>
+        <path d="M136 270 C136 230 134 190 138 165 Q140 155 140 150 Q140 155 142 165 C146 190 144 230 144 270Z" fill="#6d4c41" opacity=".3"/>
+        <!-- Branches -->
+        <path d="M140 170 Q120 150 95 145" fill="none" stroke="#8d6e63" stroke-width="4" stroke-linecap="round"/>
+        <path d="M140 155 Q165 130 185 125" fill="none" stroke="#8d6e63" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M140 140 Q110 115 85 110" fill="none" stroke="#8d6e63" stroke-width="3" stroke-linecap="round"/>
+        <path d="M140 130 Q170 105 195 98" fill="none" stroke="#8d6e63" stroke-width="3" stroke-linecap="round"/>
+        <path d="M140 115 Q125 90 110 80" fill="none" stroke="#8d6e63" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M140 108 Q160 82 178 72" fill="none" stroke="#8d6e63" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- Leaf clusters -->
+        <circle cx="90" cy="142" r="22" fill="#66bb6a" opacity=".7"/>
+        <circle cx="78" cy="130" r="18" fill="#81c784" opacity=".6"/>
+        <circle cx="105" cy="135" r="16" fill="#4caf50" opacity=".5"/>
+        <circle cx="190" cy="120" r="22" fill="#66bb6a" opacity=".7"/>
+        <circle cx="200" cy="108" r="18" fill="#81c784" opacity=".6"/>
+        <circle cx="175" cy="115" r="16" fill="#4caf50" opacity=".5"/>
+        <circle cx="80" cy="106" r="20" fill="#66bb6a" opacity=".7"/>
+        <circle cx="68" cy="95" r="16" fill="#81c784" opacity=".6"/>
+        <circle cx="95" cy="98" r="14" fill="#4caf50" opacity=".5"/>
+        <circle cx="200" cy="92" r="20" fill="#66bb6a" opacity=".7"/>
+        <circle cx="210" cy="80" r="16" fill="#81c784" opacity=".6"/>
+        <circle cx="185" cy="85" r="14" fill="#4caf50" opacity=".5"/>
+        <circle cx="108" cy="76" r="18" fill="#66bb6a" opacity=".7"/>
+        <circle cx="95" cy="65" r="15" fill="#81c784" opacity=".6"/>
+        <circle cx="180" cy="68" r="18" fill="#66bb6a" opacity=".7"/>
+        <circle cx="192" cy="56" r="15" fill="#81c784" opacity=".6"/>
+        <!-- Top crown -->
+        <circle cx="140" cy="75" r="24" fill="#66bb6a" opacity=".7"/>
+        <circle cx="128" cy="62" r="20" fill="#81c784" opacity=".6"/>
+        <circle cx="155" cy="58" r="20" fill="#81c784" opacity=".6"/>
+        <circle cx="140" cy="50" r="18" fill="#4caf50" opacity=".5"/>
+        <!-- Flowers -->
+        <circle cx="82" cy="125" r="6" fill="#f48fb1"/><circle cx="82" cy="125" r="2.5" fill="#fff176"/>
+        <circle cx="195" cy="105" r="6" fill="#ce93d8"/><circle cx="195" cy="105" r="2.5" fill="#fff176"/>
+        <circle cx="100" cy="90" r="5.5" fill="#ef9a9a"/><circle cx="100" cy="90" r="2.2" fill="#fff176"/>
+        <circle cx="185" cy="78" r="5.5" fill="#f48fb1"/><circle cx="185" cy="78" r="2.2" fill="#fff176"/>
+        <circle cx="130" cy="58" r="5" fill="#ce93d8"/><circle cx="130" cy="58" r="2" fill="#fff176"/>
+        <circle cx="158" cy="52" r="5" fill="#ef9a9a"/><circle cx="158" cy="52" r="2" fill="#fff176"/>
+        <circle cx="140" cy="42" r="5.5" fill="#f48fb1"/><circle cx="140" cy="42" r="2.2" fill="#fff9c4"/>
+        <circle cx="72" cy="100" r="5" fill="#f48fb1"/><circle cx="72" cy="100" r="2" fill="#fff176"/>
+        <circle cx="205" cy="85" r="5" fill="#ce93d8"/><circle cx="205" cy="85" r="2" fill="#fff176"/>
+        <circle cx="115" cy="72" r="4.5" fill="#ef9a9a"/><circle cx="115" cy="72" r="1.8" fill="#fff176"/>
+        <circle cx="168" cy="62" r="4.5" fill="#f48fb1"/><circle cx="168" cy="62" r="1.8" fill="#fff176"/>
+        <!-- Small leaf accents -->
+        <circle cx="88" cy="148" r="8" fill="#a5d6a7" opacity=".5"/>
+        <circle cx="195" cy="130" r="8" fill="#a5d6a7" opacity=".5"/>
+        <circle cx="140" cy="92" r="10" fill="#a5d6a7" opacity=".4"/>
+      </svg>
+    </div>
+    <div class="about-txt">
+      <h2 id="about-h"><span>G-math</span> הוקמה כדי להעניק לכל תלמידי ישראל הזדמנות שווה לצמיחה.</h2>
+      <p id="about-p">הפרויקט נוסד מתוך חזונה של שרה גרז׳וטיס, מורה ותיקה למתמטיקה – להנגיש את עולמות המספרים והצורות לכל תלמיד ותלמידה.<br><br>מתוך הבנה של האתגרים שבלמידה, במיוחד עבור תלמידים שמתקשים להתרכז או להתמיד, האתר מרכז מאות מצגות ושיעורים ברמה גבוהה, המותאמים באופן אישי לרמות השונות. כאן, כל אחד יכול למצוא גישה חדשה ונגישה למתמטיקה, כזו שמאפשרת להתגבר על מכשולים ולהצליח.</p>
+      <button class="about-btn" onclick="goT(0)" tabindex="0" aria-label="עוד קצת עלינו">
+        <span id="about-btn-text">עוד קצת עלינו</span>
+        <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <section class="tsc"><h2 id="th2">📚 נושאי לימוד</h2><div class="tg" id="tg"></div></section>
+</div>
+
+<!-- ═══ TOPIC ═══ -->
+<div class="page" id="p-topic" role="main">
+  <div class="tp-wrap" id="tp-wrap"></div>
+</div>
+
+<!-- ═══ LESSON ═══ -->
+<div class="page" id="p-lesson" role="main">
+  <div class="bc"><a onclick="goHome()">🏠 <span class="t-h">דף הבית</span></a><span class="s">/</span><a id="bclt"></a><span class="s">/</span><a id="bcls"></a><span class="s">/</span><span id="bcln"></span></div>
+  <div class="lp-wrap" id="lp-wrap">
+    <div class="lp-title"><h2 id="l-title"></h2><span class="pb" id="l-badge"></span></div>
+    <div class="vf" id="l-viewer"><div class="vf-slide" id="l-slide"></div><div class="vi">📄</div><span id="l-vw"></span></div>
+    <div class="vc" id="l-ctrl"></div>
+    <!-- Overlay -->
+    <div class="ov-back" id="ov-back" onclick="closeOv()" role="presentation" aria-hidden="true"></div>
+    <div class="ov-panel" id="ov-panel" role="dialog" aria-label="רשימת שיעורים" aria-modal="true">
+      <div class="ov-hdr"><h4>📋 <span class="t-ls">שיעורים</span></h4><button class="ov-close" onclick="closeOv()" aria-label="סגור">✕</button></div>
+      <div class="ov-srch"><input id="ov-filter" placeholder="" oninput="filterOv(this.value)"></div>
+      <div class="ov-list" id="ov-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ STICKY FOOTER ═══ -->
+<footer class="ftr" role="contentinfo">
+  <div class="fb"><b>G-Math</b> · <span class="t-tl">מתמטיקה לכל</span> · © <span id="yr"></span></div>
+  <nav class="fn"><a onclick="goHome()" class="t-h2">בית</a><a class="t-ab">אודות</a><a class="t-ct">צור קשר</a></nav>
+  <div class="ft">
+    <div class="zg">
+      <span class="zl">🔍</span>
+      <button class="zb" id="zo" onclick="chZ(-0.1)">−</button>
+      <span class="zp" id="zp">100%</span>
+      <button class="zb" id="zi" onclick="chZ(0.1)">+</button>
+    </div>
+    <div class="dv"></div>
+    <div class="ls" id="lbs"></div>
+  </div>
+</footer>
+
+<div class="dbg">🌟 Galadriel v4 — Chips + Scroll topics</div>
+
+<script>
+const I={
+  he:{d:'rtl',l:'he',tl:'מתמטיקה לכל',ht:'למדו מתמטיקה עם <span>GMath</span>',hs:'מצגות, דפי עבודה ופעילויות אינטראקטיביות — הכל במקום אחד, בחינם.',th:'📚 נושאי לימוד',hm:'דף הבית',ab:'אודות',ct:'צור קשר',sr:'חיפוש...',ls:'שיעורים',sb:'נושאי משנה',tw:'נושאים',sw:'תתי-נושאים',lw:'שיעורים',pr:'מצגות',fs:'⛶ מסך מלא',ws:'📥 דף עבודה',pv:'→ הקודם',nx:'הבא ←',vw:'כאן תוצג המצגת — HTML / PDF',ad:'למדו על ענפי המתמטיקה השונים',sl:'בחרו נושא משנה',t1:'האתר מאושר על ידי משרד החינוך',t2:'כל תכני האתר נגישים בחינם',t3:'ריכוז עצום של שיעורים ומצגות לכל הרמות',bk:'חזרה לנושאים'},
+  en:{d:'ltr',l:'en',tl:'Math for Everyone',ht:'Learn Math with <span>GMath</span>',hs:'Presentations, worksheets, and interactive activities — all in one place, for free.',th:'📚 Learning Topics',hm:'Home',ab:'About',ct:'Contact',sr:'Search...',ls:'Lessons',sb:'Subtopics',tw:'Topics',sw:'Subtopics',lw:'Lessons',pr:'Presentations',fs:'⛶ Fullscreen',ws:'📥 Worksheet',pv:'← Previous',nx:'Next →',vw:'Presentation will display here — HTML / PDF',ad:'Learn about the different branches of mathematics',sl:'Select a subtopic',t1:'Approved by the Ministry of Education',t2:'All website features are accessible for free',t3:'Huge collection of lessons and presentations for all levels',bk:'Back to topics'},
+  ar:{d:'rtl',l:'ar',tl:'رياضيات للجميع',ht:'تعلّم الرياضيات مع <span>GMath</span>',hs:'عروض تقديمية وأوراق عمل وأنشطة تفاعلية — كل شيء في مكان واحد، مجاناً.',th:'📚 مواضيع التعلم',hm:'الرئيسية',ab:'حول',ct:'اتصل بنا',sr:'بحث...',ls:'دروس',sb:'مواضيع فرعية',tw:'مواضيع',sw:'مواضيع فرعية',lw:'دروس',pr:'عروض',fs:'⛶ شاشة كاملة',ws:'📥 ورقة عمل',pv:'→ السابق',nx:'التالي ←',vw:'سيتم عرض العرض هنا',ad:'تعرف على فروع الرياضيات المختلفة',sl:'اختر موضوعاً فرعياً',t1:'معتمد من وزارة التربية والتعليم',t2:'جميع محتويات الموقع متاحة مجاناً',t3:'مجموعة ضخمة من الدروس والعروض لجميع المستويات',bk:'العودة للمواضيع'}
+};
+const D=[
+  {id:'about',icon:'📐',c:'#9C27B0',bg:'#F3E5F5',n:{he:'על המתמטיקה',en:'About Mathematics',ar:'عن الرياضيات'},ds:{he:'מבוא כללי לעולם המתמטיקה',en:'General introduction to mathematics',ar:'مقدمة عامة للرياضيات'},isA:true,
+   cards:[
+     {icon:'➕',c:'#6366f1',bg:'#eef2ff',n:{he:'אלגברה',en:'Algebra',ar:'الجبر'},d:{he:'משוואות, פונקציות וביטויים',en:'Equations, functions & expressions',ar:'معادلات ودوال'}},
+     {icon:'📊',c:'#FF9800',bg:'#FFF3E0',n:{he:'טריגונומטריה',en:'Trigonometry',ar:'علم المثلثات'},d:{he:'פונקציות טריגו, זהויות',en:'Trig functions & identities',ar:'دوال مثلثية'}},
+     {icon:'∫',c:'#4CAF50',bg:'#E8F5E9',n:{he:'חדו״א',en:'Calculus',ar:'التفاضل والتكامل'},d:{he:'דיפרנציאלי ואינטגרלי',en:'Differential & integral',ar:'تفاضل وتكامل'}},
+     {icon:'🔲',c:'#2196F3',bg:'#E3F2FD',n:{he:'הנדסת המרחב',en:'Spatial Engineering',ar:'الهندسة الفراغية'},d:{he:'גיאומטריה תלת-ממדית',en:'3D geometry & solids',ar:'هندسة ثلاثية الأبعاد'}},
+     {icon:'📈',c:'#00BCD4',bg:'#E0F7FA',n:{he:'אנליטית',en:'Analytic Geometry',ar:'الهندسة التحليلية'},d:{he:'גיאומטריה אנליטית במישור',en:'Analytic geometry',ar:'هندسة تحليلية'}},
+     {icon:'➡️',c:'#795548',bg:'#EFEBE9',n:{he:'וקטורים',en:'Vectors',ar:'المتجهات'},d:{he:'חשבון וקטורי',en:'Vector operations',ar:'عمليات المتجهات'}},
+     {icon:'△',c:'#607D8B',bg:'#ECEFF1',n:{he:'גיאומטריה',en:'Geometry',ar:'الهندسة'},d:{he:'משפטים והוכחות',en:'Theorems & proofs',ar:'مبرهنات وبراهين'}},
+     {icon:'🎲',c:'#E91E63',bg:'#FCE4EC',n:{he:'הסתברות',en:'Probability',ar:'الاحتمالات'},d:{he:'הסתברות וקומבינטוריקה',en:'Probability & combinatorics',ar:'احتمالات وتوافقيات'}}]},
+  {id:'alg',icon:'➕',c:'#6366f1',bg:'#eef2ff',n:{he:'אלגברה',en:'Algebra',ar:'الجبر'},ds:{he:'משוואות, פונקציות וביטויים אלגבריים',en:'Equations, functions and algebraic expressions',ar:'معادلات ودوال وتعابير جبرية'},
+   subs:[{n:{he:'משוואות ליניאריות',en:'Linear Equations',ar:'معادلات خطية'},ls:[{he:'משוואה עם נעלם אחד',en:'One Variable',ar:'مجهول واحد'},{he:'מערכת שני נעלמים',en:'Two Variables',ar:'مجهولان'},{he:'בעיות מילוליות',en:'Word Problems',ar:'مسائل كلامية'}]},{n:{he:'משוואות ריבועיות',en:'Quadratic Equations',ar:'معادلات تربيعية'},ls:[{he:'פירוק לגורמים',en:'Factoring',ar:'تحليل'},{he:'נוסחת השורשים',en:'Quadratic Formula',ar:'صيغة الجذور'},{he:'הדיסקרימיננטה',en:'Discriminant',ar:'المميز'},{he:'גרף הפרבולה',en:'Parabola',ar:'القطع المكافئ'}]},{n:{he:'פונקציות',en:'Functions',ar:'الدوال'},ls:[{he:'מושג הפונקציה',en:'Function Concept',ar:'مفهوم الدالة'},{he:'פונקציה לינארית',en:'Linear Function',ar:'دالة خطية'},{he:'פונקציה ריבועית',en:'Quadratic Function',ar:'دالة تربيعية'}]},{n:{he:'סדרות',en:'Sequences',ar:'متتاليات'},ls:[{he:'סדרה חשבונית',en:'Arithmetic',ar:'حسابية'},{he:'סדרה הנדסית',en:'Geometric',ar:'هندسية'}]}]},
+  {id:'tri',icon:'📊',c:'#FF9800',bg:'#FFF3E0',n:{he:'טריגונומטריה',en:'Trigonometry',ar:'علم المثلثات'},ds:{he:'פונקציות טריגונומטריות, זהויות ומשוואות',en:'Trig functions, identities & equations',ar:'دوال مثلثية وهويات'},
+   subs:[{n:{he:'יחסים טריגונומטריים',en:'Trig Ratios',ar:'نسب مثلثية'},ls:[{he:'סינוס, קוסינוס, טנגנס',en:'Sin, Cos, Tan',ar:'جيب، تمام، ظل'},{he:'מעגל היחידה',en:'Unit Circle',ar:'دائرة الوحدة'}]},{n:{he:'זהויות',en:'Identities',ar:'هويات'},ls:[{he:'זהויות בסיסיות',en:'Basic Identities',ar:'هويات أساسية'},{he:'נוסחאות כפל',en:'Double Angle',ar:'صيغ الضعف'}]},{n:{he:'משוואות',en:'Equations',ar:'معادلات'},ls:[{he:'פתרון משוואות',en:'Solving',ar:'حل'},{he:'יישומים',en:'Applications',ar:'تطبيقات'}]}]},
+  {id:'cal',icon:'∫',c:'#4CAF50',bg:'#E8F5E9',n:{he:'חדו״א',en:'Calculus',ar:'التفاضل والتكامل'},ds:{he:'חשבון דיפרנציאלי ואינטגרלי',en:'Differential & integral calculus',ar:'حساب التفاضل والتكامل'},
+   subs:[{n:{he:'גבולות',en:'Limits',ar:'نهايات'},ls:[{he:'מושג הגבול',en:'Limit Concept',ar:'مفهوم النهاية'},{he:'חוקי הגבולות',en:'Limit Laws',ar:'قوانين'},{he:'רציפות',en:'Continuity',ar:'استمرارية'}]},{n:{he:'נגזרות',en:'Derivatives',ar:'مشتقات'},ls:[{he:'הגדרת הנגזרת',en:'Definition',ar:'تعريف'},{he:'כללי גזירה',en:'Rules',ar:'قواعد'},{he:'כלל השרשרת',en:'Chain Rule',ar:'قاعدة السلسلة'},{he:'יישומים',en:'Applications',ar:'تطبيقات'}]},{n:{he:'אינטגרלים',en:'Integrals',ar:'تكاملات'},ls:[{he:'אינטגרל לא מסוים',en:'Indefinite',ar:'غير محدد'},{he:'אינטגרל מסוים',en:'Definite',ar:'محدد'},{he:'חישוב שטחים',en:'Area Calc',ar:'حساب مساحات'}]}]},
+  {id:'spa',icon:'🔲',c:'#2196F3',bg:'#E3F2FD',n:{he:'הנדסת המרחב',en:'Spatial Eng.',ar:'هندسة فراغية'},ds:{he:'גיאומטריה תלת-ממדית',en:'3D geometry & solids',ar:'أشكال ثلاثية الأبعاد'},
+   subs:[{n:{he:'גופים במרחב',en:'Solids',ar:'مجسمات'},ls:[{he:'תיבה',en:'Prism',ar:'منشور'},{he:'גליל',en:'Cylinder',ar:'أسطوانة'},{he:'חרוט',en:'Cone',ar:'مخروط'},{he:'כדור',en:'Sphere',ar:'كرة'}]},{n:{he:'מישורים',en:'Planes',ar:'مستويات'},ls:[{he:'משוואת מישור',en:'Plane Eq.',ar:'معادلة مستوى'},{he:'מרחק נקודה',en:'Point Distance',ar:'مسافة نقطة'}]}]},
+  {id:'ana',icon:'📈',c:'#00BCD4',bg:'#E0F7FA',n:{he:'אנליטית',en:'Analytic',ar:'تحليلية'},ds:{he:'גיאומטריה אנליטית במישור',en:'Analytic geometry',ar:'هندسة تحليلية'},
+   subs:[{n:{he:'ישר במישור',en:'Lines',ar:'مستقيمات'},ls:[{he:'משוואת ישר',en:'Line Eq.',ar:'معادلة مستقيم'},{he:'שיפוע',en:'Slope',ar:'ميل'},{he:'מרחק נקודה מישר',en:'Point-Line Dist.',ar:'مسافة'}]},{n:{he:'מעגל',en:'Circles',ar:'دوائر'},ls:[{he:'משוואת מעגל',en:'Circle Eq.',ar:'معادلة دائرة'},{he:'ישר ומעגל',en:'Line & Circle',ar:'مستقيم ودائرة'}]}]},
+  {id:'vec',icon:'➡️',c:'#795548',bg:'#EFEBE9',n:{he:'וקטורים',en:'Vectors',ar:'متجهات'},ds:{he:'חשבון וקטורי',en:'Vector arithmetic',ar:'حساب متجهات'},
+   subs:[{n:{he:'פעולות',en:'Operations',ar:'عمليات'},ls:[{he:'חיבור וחיסור',en:'Add & Sub',ar:'جمع وطرح'},{he:'כפל בסקלר',en:'Scalar Mult.',ar:'ضرب بعدد'},{he:'מכפלה סקלרית',en:'Dot Product',ar:'جداء نقطي'}]},{n:{he:'יישומים',en:'Applications',ar:'تطبيقات'},ls:[{he:'בגיאומטריה',en:'In Geometry',ar:'في الهندسة'},{he:'בפיזיקה',en:'In Physics',ar:'في الفيزياء'}]}]},
+  {id:'geo',icon:'△',c:'#607D8B',bg:'#ECEFF1',n:{he:'גיאומטריה',en:'Geometry',ar:'هندسة'},ds:{he:'משפטים והוכחות',en:'Theorems & proofs',ar:'مبرهنات وبراهين'},
+   subs:[{n:{he:'משולשים',en:'Triangles',ar:'مثلثات'},ls:[{he:'סוגי משולשים',en:'Types',ar:'أنواع'},{he:'חפיפה',en:'Congruence',ar:'تطابق'},{he:'דמיון',en:'Similarity',ar:'تشابه'}]},{n:{he:'מרובעים',en:'Quadrilaterals',ar:'رباعيات'},ls:[{he:'מקבילית',en:'Parallelogram',ar:'متوازي أضلاع'},{he:'מעוין',en:'Rhombus',ar:'معين'},{he:'טרפז',en:'Trapezoid',ar:'شبه منحرف'}]},{n:{he:'מעגל',en:'Circles',ar:'دوائر'},ls:[{he:'זוויות',en:'Angles',ar:'زوايا'},{he:'משיקים ומיתרים',en:'Tangents',ar:'مماسات'}]}]},
+  {id:'prb',icon:'🎲',c:'#E91E63',bg:'#FCE4EC',n:{he:'הסתברות',en:'Probability',ar:'احتمالات'},ds:{he:'הסתברות, קומבינטוריקה וסטטיסטיקה',en:'Probability & combinatorics',ar:'احتمالات وتوافقيات'},
+   subs:[{n:{he:'הסתברות בסיסית',en:'Basic Prob.',ar:'أساسيات'},ls:[{he:'מרחב מדגם',en:'Sample Space',ar:'فضاء عينة'},{he:'הסתברות מאורע',en:'Event Prob.',ar:'احتمال حدث'},{he:'עץ הסתברות',en:'Prob. Tree',ar:'شجرة'}]},{n:{he:'קומבינטוריקה',en:'Combinatorics',ar:'توافقيات'},ls:[{he:'תמורות',en:'Permutations',ar:'تباديل'},{he:'צירופים',en:'Combinations',ar:'توافيق'},{he:'בינום ניוטון',en:'Binomial',ar:'ذات الحدين'}]}]}
+];
+
+let lang='he',cT=null,cSi=0,cLi=0;
+function t(o){return typeof o==='string'?o:(o[lang]||o.he||'');}
+function i(){return I[lang];}
+
+// ─── LANG ───
+function setL(l){
+  lang=l;const v=I[l];
+  document.documentElement.dir=v.d;document.documentElement.lang=v.l;
+  document.getElementById('tagline').textContent=v.tl;
+  document.getElementById('hero-t').innerHTML=v.ht;
+  document.getElementById('hero-s').textContent=v.hs;
+  document.getElementById('th2').textContent=v.th;
+  document.getElementById('tr1').textContent=v.t1;
+  document.getElementById('tr2').textContent=v.t2;
+  document.getElementById('tr3').textContent=v.t3;
+  document.querySelectorAll('.t-h,.t-h2').forEach(e=>e.textContent=v.hm);
+  document.querySelectorAll('.t-ab').forEach(e=>e.textContent=v.ab);
+  document.querySelectorAll('.t-ct').forEach(e=>e.textContent=v.ct);
+  document.querySelectorAll('.t-tl').forEach(e=>e.textContent=v.tl);
+  document.querySelectorAll('.t-back').forEach(e=>e.textContent=v.bk);
+  document.querySelectorAll('.tw').forEach(e=>e.textContent=v.tw);
+  document.querySelectorAll('.sw').forEach(e=>e.textContent=v.sw);
+  document.querySelectorAll('.lw').forEach(e=>e.textContent=v.lw);
+  rLB();rHome();if(cT!==null)goT(cT);
+}
+function rLB(){document.getElementById('lbs').innerHTML=['he','en','ar'].map(l=>`<button class="lb${l===lang?' on':''}" onclick="setL('${l}')">${l.toUpperCase()}</button>`).join('');}
+
+// ─── HOME ───
+function rHome(){document.getElementById('tg').innerHTML=D.map((x,j)=>`<div class="tc fade-in fade-in-stagger" style="--cc:${x.c};--si:${j}" onclick="goT(${j})" tabindex="0" role="button" aria-label="${t(x.n)}" onkeydown="if(event.key==='Enter')goT(${j})"><div class="tci" style="background:${x.bg}" aria-hidden="true">${x.icon}</div><div class="tcn"><h3>${t(x.n)}</h3><p>${t(x.ds)}</p></div></div>`).join('');observeFadeIns();}
+function show(p){document.querySelectorAll('.page').forEach(x=>{x.classList.remove('active');x.style.opacity='0';});const el=document.getElementById('p-'+p);el.classList.add('active');requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.opacity='1';}));window.scrollTo(0,0);}
+function goHome(){cT=null;show('home');}
+function toggleCard(el){el.classList.toggle('expanded');}
+function rAboutCards(cards,fl){
+  const v=i(),tp=D[cT];
+  const filtered=cards.map((c,ci)=>({c,ci})).filter(({c})=>!fl||t(c.n).toLowerCase().includes(fl)||t(c.d).toLowerCase().includes(fl));
+  if(!filtered.length) return `<div class="tp-empty">🔍 ${v.sr}</div>`;
+  return filtered.map(({c,ci})=>{
+    const vis=subVisFor(ci);
+    const sh=shadeGrad(c.c||tp.c,ci,cards.length);
+    return `<div class="tp-card tp-card-direct fade-in fade-in-stagger" style="--si:${ci}" onclick="goL(0,${ci})" tabindex="0" role="button" aria-label="${t(c.n)}" onkeydown="if(event.key==='Enter')goL(0,${ci})">
+      <div class="tp-card-img" style="background:${sh.grad}" aria-hidden="true">${vis.svg}<span class="tp-overlay">${vis.icon}</span></div>
+      <div class="tp-card-body">
+        <div class="tp-card-name">${t(c.n)}</div>
+        <div class="tp-card-meta"><span class="tp-card-dot" style="background:${sh.dot}"></span>${t(c.d)}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function filterAbout(q){
+  const fl=q.toLowerCase(),tp=D[cT];
+  document.getElementById('about-grid').innerHTML=rAboutCards(tp.cards,fl);
+  if(typeof observeFadeIns==='function') observeFadeIns();
+}
+
+// ─── TOPIC ───
+function topicNav(idx){
+  return `<div class="tp-banner">
+    <svg class="tp-banner-bg" viewBox="0 0 1200 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#818cf8"/><stop offset="50%" stop-color="#6366f1"/><stop offset="100%" stop-color="#7c3aed"/></linearGradient>
+      </defs>
+      <rect width="1200" height="200" fill="url(#bg1)"/>
+      <!-- Grid -->
+      <g stroke="rgba(255,255,255,.06)" stroke-width=".5">
+        ${Array.from({length:25},(_,i)=>`<line x1="${i*50}" y1="0" x2="${i*50}" y2="200"/>`).join('')}
+        ${Array.from({length:5},(_,i)=>`<line x1="0" y1="${i*50}" x2="1200" y2="${i*50}"/>`).join('')}
+      </g>
+      <!-- Axes -->
+      <g stroke="rgba(255,255,255,.12)" stroke-width="1.5">
+        <line x1="100" y1="20" x2="100" y2="180"/><line x1="20" y1="140" x2="260" y2="140"/>
+        <polygon points="100,18 96,28 104,28" fill="rgba(255,255,255,.12)"/>
+        <polygon points="262,140 252,136 252,144" fill="rgba(255,255,255,.12)"/>
+      </g>
+      <!-- Parabola -->
+      <path d="M40 160 Q100 20 160 160" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"/>
+      <!-- Sin wave -->
+      <path d="M300 100 C330 50 360 50 390 100 S450 150 480 100 S540 50 570 100 S630 150 660 100" fill="none" stroke="rgba(255,255,255,.15)" stroke-width="2"/>
+      <!-- Circle -->
+      <circle cx="820" cy="100" r="60" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="1.5"/>
+      <line x1="820" y1="100" x2="870" y2="70" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+      <text x="835" y="78" fill="rgba(255,255,255,.15)" font-size="14" font-family="serif">r</text>
+      <!-- Triangle -->
+      <polygon points="950,160 1050,160 1000,60" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+      <text x="985" y="110" fill="rgba(255,255,255,.1)" font-size="16" font-family="serif">△</text>
+      <!-- Formulas -->
+      <text x="130" y="50" fill="rgba(255,255,255,.1)" font-size="18" font-family="serif">f(x) = ax² + bx + c</text>
+      <text x="380" y="170" fill="rgba(255,255,255,.1)" font-size="16" font-family="serif">sin²θ + cos²θ = 1</text>
+      <text x="680" y="45" fill="rgba(255,255,255,.1)" font-size="20" font-family="serif">e^iπ + 1 = 0</text>
+      <text x="900" y="185" fill="rgba(255,255,255,.1)" font-size="15" font-family="serif">a² + b² = c²</text>
+      <text x="1050" y="80" fill="rgba(255,255,255,.08)" font-size="40" font-family="serif">∫</text>
+      <text x="1100" y="140" fill="rgba(255,255,255,.08)" font-size="36" font-family="serif">Σ</text>
+      <text x="270" y="60" fill="rgba(255,255,255,.08)" font-size="34" font-family="serif">π</text>
+      <text x="570" y="60" fill="rgba(255,255,255,.08)" font-size="30" font-family="serif">∞</text>
+      <!-- Dots / decorations -->
+      <circle cx="200" cy="80" r="3" fill="rgba(255,255,255,.15)"/>
+      <circle cx="450" cy="40" r="2.5" fill="rgba(255,255,255,.12)"/>
+      <circle cx="750" cy="50" r="3" fill="rgba(255,255,255,.1)"/>
+      <circle cx="1000" cy="30" r="2" fill="rgba(255,255,255,.12)"/>
+      <circle cx="600" cy="170" r="2.5" fill="rgba(255,255,255,.1)"/>
+    </svg>
+    <div class="tp-nav-bar">
+      <div class="tp-nav">
+        ${D.map((x,j)=>`<div class="tp-nav-btn${j===idx?' on':''}" style="--nav-c:${x.c}" onclick="goT(${j})" tabindex="0" role="tab" aria-selected="${j===idx}" ${j===idx?'aria-current="true"':''} aria-label="${t(x.n)}" onkeydown="if(event.key==='Enter')goT(${j})"><div class="tp-nav-link"><div class="tp-nav-icon" aria-hidden="true">${x.icon}</div><div class="tp-nav-label">${t(x.n)}</div></div></div>`).join('')}
+      </div>
+    </div>
+  </div>`;
+}
+
+function goT(idx){
+  cT=idx;cSi=0;const tp=D[idx],v=i();
+
+  if(tp.isA){
+    const w=document.getElementById('tp-wrap');
+    w.innerHTML=`
+      ${topicNav(idx)}
+      <a class="tp-back" onclick="goHome()" tabindex="0" role="link" onkeydown="if(event.key==='Enter')goHome()"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg><span class="t-back">${v.bk}</span></a>
+      <div class="tp-bar">
+        <div class="tp-search"><input class="tp-si" id="tp-filter-about" placeholder="${v.sr}" aria-label="${v.sr}" oninput="filterAbout(this.value)"></div>
+      </div>
+      <div class="tp-grid" id="about-grid">${rAboutCards(tp.cards,'')}</div>`;
+  } else {
+    rTopic(tp);
+  }
+  show('topic');
+}
+
+// Subtopic visual data — SVGs and gradients per topic color
+const subVis=[
+  {svg:'<svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.5"><line x1="14" y1="24" x2="50" y2="24"/><line x1="14" y1="40" x2="50" y2="40"/></svg>',icon:'='},
+  {svg:'<svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.5"><path d="M10 52 C20 52 24 12 32 12 S44 52 54 52"/></svg>',icon:'f(x)'},
+  {svg:'<svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="18,16 46,16 28,32 46,48 18,48"/></svg>',icon:'∑'},
+  {svg:'<svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2"><path d="M20 12c-6 0-8 4-8 10s4 8 4 10-4 4-4 10 2 10 8 10"/><path d="M44 12c6 0 8 4 8 10s-4 8-4 10 4 4 4 10-2 10-8 10"/></svg>',icon:'{}'},
+  {svg:'<svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="10,36 20,36 28,52 44,12 54,12"/></svg>',icon:'√'},
+  {svg:'<svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 52 C18 52 22 14 32 14 Q42 14 52 24"/></svg>',icon:'log'},
+  {svg:'<svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.5"><path d="M10 12 Q32 60 54 12"/><line x1="32" y1="10" x2="32" y2="50" stroke-dasharray="4"/></svg>',icon:'∪'},
+  {svg:'<svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2"><rect x="14" y="14" width="36" height="36" rx="4"/><line x1="14" y1="32" x2="50" y2="32"/><line x1="32" y1="14" x2="32" y2="50"/></svg>',icon:'[ ]'},
+  {svg:'<svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.5"><line x1="16" y1="20" x2="48" y2="32"/><line x1="16" y1="44" x2="48" y2="32"/><line x1="16" y1="50" x2="48" y2="50"/></svg>',icon:'≤'},
+  {svg:'<svg viewBox="0 0 64 64" fill="none" stroke="#fff" stroke-width="2.5"><polyline points="12,12 32,48 52,12"/></svg>',icon:'|x|'}
+];
+function subVisFor(si){return subVis[si%subVis.length];}
+// Generate shades of the topic color — each subtopic gets a distinct shade
+function hsl(hex){const r=parseInt(hex.slice(1,3),16)/255,g=parseInt(hex.slice(3,5),16)/255,b=parseInt(hex.slice(5,7),16)/255;const mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn;let h=0;if(d){if(mx===r)h=((g-b)/d+6)%6;else if(mx===g)h=(b-r)/d+2;else h=(r-g)/d+4;h*=60;}const l=(mx+mn)/2;const s=d?(d/(1-Math.abs(2*l-1))):0;return [Math.round(h),Math.round(s*100),Math.round(l*100)];}
+function shadeGrad(hex,si,total){
+  const [h,s]=hsl(hex);
+  // Spread lightness from 45% to 75% across subtopics
+  const step=total>1?30/(total-1):0;
+  const l1=45+si*step;
+  const l2=l1+12;
+  return {grad:`linear-gradient(135deg,hsl(${h},${Math.min(s+10,100)}%,${l1}%),hsl(${h},${Math.min(s+5,100)}%,${l2}%))`,dot:`hsl(${h},${s}%,${l1}%)`};
+}
+
+function rTopic(tp,filter){
+  const v=i(),subs=tp.subs||[],fl=(filter||'').toLowerCase();
+  const totalLessons=subs.reduce((a,s)=>a+s.ls.length,0);
+  const filtered=subs.map((s,si)=>({s,si,match:!fl||t(s.n).toLowerCase().includes(fl)||s.ls.some(l=>t(l).toLowerCase().includes(fl))})).filter(x=>x.match);
+  const w=document.getElementById('tp-wrap');
+  w.innerHTML=`
+    ${topicNav(cT)}
+    <a class="tp-back" onclick="goHome()" tabindex="0" role="link" onkeydown="if(event.key==='Enter')goHome()"><svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg><span class="t-back">חזרה לנושאים</span></a>
+    <div class="tp-bar">
+      <div class="tp-search"><input class="tp-si" id="tp-filter" placeholder="${v.sr}" value="${filter||''}" oninput="rTopic(D[cT],this.value)" aria-label="${v.sr}"></div>
+    </div>
+    ${filtered.length?`<div class="tp-grid">
+      ${filtered.map(({s,si})=>{
+        const vis=subVisFor(si);
+        const sh=shadeGrad(tp.c,si,subs.length);
+        const fLessons=fl?s.ls.filter(l=>t(l).toLowerCase().includes(fl)):s.ls;
+        return `<div class="tp-card fade-in fade-in-stagger" style="--si:${si}" tabindex="0" role="button" aria-label="${t(s.n)} — ${s.ls.length} ${v.ls}" onclick="toggleCard(this)" onkeydown="if(event.key==='Enter')toggleCard(this)">
+          <div class="tp-card-img" style="background:${sh.grad}" aria-hidden="true">${vis.svg}<span class="tp-overlay">${vis.icon}</span></div>
+          <div class="tp-card-body">
+            <div class="tp-card-name">${t(s.n)}</div>
+            <div class="tp-card-meta"><span class="tp-card-dot" style="background:${sh.dot}"></span>${s.ls.length} ${v.ls} · ${s.ls.reduce((_,l2,li)=>_+(2+((si*7+li*3)%3)),0)} ${v.pr}</div>
+          </div>
+          <div class="tp-card-lessons">
+            <div class="tp-card-lessons-inner">
+              <h4 style="color:${sh.dot}">📋 ${v.ls}</h4>
+              <div class="tp-llist">${fLessons.map((l,li)=>{
+                const pc=2+((si*7+li*3)%3);
+                return `<div class="tp-lbtn" role="button" tabindex="0" onclick="goL(${si},${li})" onkeydown="if(event.key==='Enter')goL(${si},${li})" onmouseover="this.style.background='${sh.dot}'" onmouseout="this.style.background=''" aria-label="${t(l)}">${t(l)}<span class="tp-pc" aria-hidden="true">📄 ${pc}</span></div>`;
+              }).join('')}</div>
+            </div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>`:`<div class="tp-empty">🔍 ${v.sr}</div>`}`;
+  const inp=document.getElementById('tp-filter');
+  if(inp&&fl){inp.focus();inp.setSelectionRange(fl.length,fl.length);}
+  if(typeof observeFadeIns==='function') observeFadeIns();
+}
+
+// jumpSec no longer needed with card grid
+
+// ─── LESSON (Option B — Floating Overlay) ───
+let cPi=0,cLessons=[],cLessonPc=[];
+function goL(si,li){
+  cSi=si;cLi=li;cPi=0;const tp=D[cT],v=i();
+  let lName,subName;
+  cLessons=[];cLessonPc=[];
+  if(tp.isA){
+    cLessons=tp.cards.map(x=>t(x.n));
+    lName=cLessons[li];subName=t(tp.n);
+  } else {
+    const sub=tp.subs[si];subName=t(sub.n);
+    cLessons=sub.ls.map(x=>t(x));lName=cLessons[li];
+  }
+  // Generate stable pres counts per lesson
+  cLessonPc=cLessons.map((_,j)=>2+((cT*7+si*3+j*5)%3));
+  const pc=cLessonPc[li];
+  // Breadcrumbs
+  const a=document.getElementById('bclt');a.textContent=t(tp.n);a.onclick=()=>goT(cT);
+  const b=document.getElementById('bcls');b.textContent=subName;b.onclick=()=>goT(cT);
+  document.getElementById('bcln').textContent=lName;
+  // Title
+  document.getElementById('l-title').textContent=lName;
+  document.getElementById('l-badge').textContent=pc+' '+v.pr;
+  // Viewer
+  document.getElementById('l-slide').textContent=v.pr+' 1 / '+pc;
+  document.getElementById('l-vw').textContent=v.vw;
+  // Controls
+  document.getElementById('l-ctrl').innerHTML=`
+    <div class="pn-row">
+      <button class="nb" id="pp" onclick="chP(-1)" disabled>${v.pv}</button>
+      <div class="dn" id="pdots">${Array.from({length:pc},(_,j)=>`<button class="db${j===0?' on':''}" onclick="goP(${j})">${j+1}</button>`).join('')}</div>
+      <button class="nb" id="pn" onclick="chP(1)" ${pc<=1?'disabled':''}>${v.nx}</button>
+      <span class="nc" id="pcount">1 / ${pc}</span>
+    </div>
+    <div class="va">
+      <button class="ls-btn" onclick="openOv()">📋 ${v.ls} <span style="font-size:.68rem">(${cLessons.length})</span></button>
+      <button class="ab" onclick="togFS()">${v.fs}</button>
+      <button class="ab">${v.ws}</button>
+    </div>`;
+  // Overlay search placeholder
+  document.getElementById('ov-filter').placeholder=v.sr;
+  document.getElementById('ov-filter').value='';
+  // Render overlay list
+  renderOv();
+  // Close overlay if open
+  closeOv();
+  show('lesson');
+}
+function renderOv(filter){
+  const v=i(),f=(filter||'').trim().toLowerCase();
+  document.getElementById('ov-list').innerHTML=cLessons.map((l,j)=>{
+    if(f && !l.toLowerCase().includes(f)) return '';
+    const pc=cLessonPc[j];
+    return `<div class="ov-it${j===cLi?' on':''}" onclick="goL(cSi,${j})">
+      <div class="ov-it-num">${j+1}</div>
+      <div class="ov-it-info">
+        <div class="ov-it-name">${l}</div>
+        <div class="ov-it-meta"><span>📄 ${pc} ${v.pr}</span>${j===cLi?'<span class="ov-now">⬤</span>':''}</div>
+      </div></div>`;
+  }).join('');
+}
+function filterOv(v){renderOv(v);}
+function openOv(){
+  document.getElementById('ov-back').classList.add('show');
+  document.getElementById('ov-panel').classList.add('show');
+  renderOv();
+}
+function closeOv(){
+  document.getElementById('ov-back').classList.remove('show');
+  document.getElementById('ov-panel').classList.remove('show');
+}
+function goP(pi){
+  const pc=cLessonPc[cLi];
+  cPi=Math.max(0,Math.min(pc-1,pi));
+  document.querySelectorAll('#pdots .db').forEach((b,j)=>{b.classList.toggle('on',j===cPi);});
+  document.getElementById('pp').disabled=cPi===0;
+  document.getElementById('pn').disabled=cPi>=pc-1;
+  document.getElementById('pcount').textContent=(cPi+1)+' / '+pc;
+  const v=i();
+  document.getElementById('l-slide').textContent=v.pr+' '+(cPi+1)+' / '+pc;
+}
+function chP(d){goP(cPi+d);}
+function togFS(){
+  const el=document.getElementById('l-viewer');
+  if(!document.fullscreenElement&&!document.webkitFullscreenElement){
+    if(el.requestFullscreen) el.requestFullscreen();
+    else if(el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+  } else {
+    if(document.exitFullscreen) document.exitFullscreen();
+    else if(document.webkitExitFullscreen) document.webkitExitFullscreen();
+  }
+}
+
+// ─── ZOOM ───
+let zm=1;
+function chZ(d){zm=Math.round((zm+d)*10)/10;zm=Math.max(.7,Math.min(1.5,zm));document.documentElement.style.setProperty('--zoom',zm);document.getElementById('zp').textContent=Math.round(zm*100)+'%';document.getElementById('zo').disabled=zm<=.7;document.getElementById('zi').disabled=zm>=1.5;}
+
+// Scroll-triggered entrance animations via IntersectionObserver
+const fadeObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');fadeObs.unobserve(e.target);}});
+},{threshold:.12});
+function observeFadeIns(){document.querySelectorAll('.fade-in:not(.visible)').forEach(el=>fadeObs.observe(el));}
+
+// INIT
+rLB();rHome();
+document.getElementById('yr').textContent=new Date().getFullYear();
+observeFadeIns();
+// Re-observe after page transitions
+const origShow=show;
+show=function(p){origShow(p);requestAnimationFrame(()=>setTimeout(observeFadeIns,60));};
+</script>
+</body>
+</html>

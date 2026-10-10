@@ -1,0 +1,14 @@
+{
+  "universe": "The Lord of the Rings",
+  "castings": [
+    { "name": "Gandalf", "role": "Coordinator", "castDate": "2026-04-01" },
+    { "name": "Elrond", "role": "Architect / Planner", "castDate": "2026-04-01" },
+    { "name": "Galadriel", "role": "UX Designer", "castDate": "2026-04-01" },
+    { "name": "Legolas", "role": "Frontend Developer (React)", "castDate": "2026-04-01" },
+    { "name": "Gimli", "role": "Backend Developer (Python)", "castDate": "2026-04-01" },
+    { "name": "Aragorn", "role": "Tester", "castDate": "2026-04-01" },
+    { "name": "Samwise", "role": "Logger / Monitoring", "castDate": "2026-04-01" },
+    { "name": "Faramir", "role": "DevOps", "castDate": "2026-04-01" },
+    { "name": "Bilbo", "role": "Scribe", "castDate": "2026-04-01" }
+  ]
+}

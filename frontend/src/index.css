@@ -1,0 +1,239 @@
+/* G-Math — tree theme (ported from docs/design/tree-mockup.html), RTL-first */
+
+:root {
+  /* Mockup palette */
+  --g-green: #4CAF50;
+  --g-blue: #1565C0;
+  --bg: #fff;
+  --bg2: #f8f9fc;
+  --tp: #1A1A2E;
+  --ts: #555770;
+  --tm: #6B6B80;
+  --bd: #E8E8EE;
+  --r: 16px;
+  --card-bg: #fff;
+  --hero-bg: linear-gradient(135deg, #E8F5E9 0%, #E3F2FD 50%, #F3E5F5 100%);
+  --overlay-bg: rgba(255, 255, 255, .92);
+  --shadow-c: rgba(0, 0, 0, .08);
+  --focus: #4A90D9;
+  --footer-h: 52px;
+
+  /* Legacy aliases (PresentationViewer.css) */
+  --bg-secondary: var(--bg2);
+  --border: var(--bd);
+  --g-blue-light: #E3F2FD;
+  --text-primary: var(--tp);
+  --text-secondary: var(--ts);
+
+  /* Text size (set by TextSizeControl via html[data-text-size]) */
+  --text-scale: 1;
+}
+
+html[data-text-size="large"] { --text-scale: 1.15; }
+html[data-text-size="xl"] { --text-scale: 1.3; }
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  font-size: calc(16px * var(--text-scale));
+  scroll-behavior: smooth;
+  /* Keep fragment targets (skip link, /#about) clear of the sticky header. */
+  scroll-padding-top: 72px;
+}
+
+body {
+  font-family: 'Rubik', 'Assistant', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--tp);
+  background: var(--bg);
+  min-height: 100vh;
+  padding-bottom: var(--footer-h);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root { min-height: 100vh; display: flex; flex-direction: column; }
+#main-content { flex: 1; display: flex; flex-direction: column; }
+#main-content:focus { outline: none; }
+
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; }
+
+/* ─── Header ─── */
+.hdr {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--overlay-bg);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--bd);
+  padding: 12px 28px;
+  display: flex;
+  align-items: center;
+}
+.logo-mark { display: inline-flex; align-items: baseline; }
+.logo { display: flex; align-items: baseline; gap: 2px; font-size: 1.45rem; font-weight: 700; }
+.lg { color: var(--g-green); }
+.lm { color: var(--g-blue); }
+.lt { font-size: .78rem; color: var(--tm); margin-inline-start: 10px; font-weight: 400; }
+
+/* ─── Fixed footer ─── */
+.ftr {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  min-height: 52px;
+  background: var(--overlay-bg);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid var(--bd);
+  padding: 10px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.fb { font-size: .85rem; color: var(--tm); }
+.fb b { color: var(--g-blue); }
+.fn { display: flex; gap: 12px; }
+.fn a { font-size: .82rem; color: var(--ts); }
+.fn a:hover { color: var(--g-blue); }
+.ft { display: flex; align-items: center; gap: 8px; }
+.dv { width: 1px; height: 18px; background: #dde1e7; }
+
+/* ─── Text-size control (mockup .zg) ─── */
+.text-size-control {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #f0f4f8;
+  padding: 3px 8px;
+  border-radius: 7px;
+}
+.text-size-control .zl { font-size: .72rem; color: #64748b; font-weight: 600; }
+.text-size-btn {
+  min-width: 24px;
+  height: 24px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e2e8f0;
+  border: none;
+  border-radius: 5px;
+  color: #475569;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: all .15s;
+}
+.text-size-btn--normal { font-size: 11px; }
+.text-size-btn--large { font-size: 14px; }
+.text-size-btn--xl { font-size: 17px; }
+.text-size-btn:hover:not(.active) { background: #cbd5e1; }
+.text-size-btn.active { background: var(--g-blue); color: #fff; }
+
+/* ─── Language switcher (mockup .ls / .lb) ─── */
+.lang-switcher { display: flex; gap: 4px; }
+.lang-btn {
+  min-height: 24px;
+  padding: 3px 9px;
+  border-radius: 5px;
+  font-size: .62rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all .15s;
+  background: #e2e8f0;
+  color: #475569;
+}
+.lang-btn.active { background: var(--g-blue); color: #fff; }
+.lang-btn:hover:not(.active) { background: #cbd5e1; }
+
+.text-size-btn:active, .lang-btn:active { transform: scale(.96); transition: transform .1s; }
+
+/* ─── Accessibility utilities ─── */
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; border-radius: 4px; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--g-blue);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 0 0 8px 8px;
+  z-index: 9999;
+  font-size: .9rem;
+  font-weight: 600;
+  transition: top .2s;
+}
+.skip-link:focus { top: 0; }
+
+/* Loading / error / empty messages */
+.state-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 28px;
+  text-align: center;
+  color: var(--ts);
+  font-size: .95rem;
+}
+.state-msg button,
+.state-msg .state-action {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 8px 20px;
+  border: none;
+  border-radius: 10px;
+  background: var(--g-blue);
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.state-msg button:hover,
+.state-msg .state-action:hover { background: #1040a0; }
+
+/* Entrance animation: add class .fu and an optional --si stagger index.
+   Fill "backwards" so the element's own :hover transforms still apply afterwards. */
+@keyframes fu {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: none; }
+}
+.fu { animation: fu .5s cubic-bezier(.4, 0, .2, 1) backwards; animation-delay: calc(var(--si, 0) * 80ms); }
+
+/* ─── Responsive ─── */
+@media (max-width: 600px) {
+  .hdr { padding: 10px 14px; }
+  .lt { display: none; }
+  .ftr { padding: 8px 12px; justify-content: center; text-align: center; row-gap: 6px; }
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
