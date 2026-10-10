@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+:root {
+  --g-green: #4CAF50;
+  --g-blue: #1565C0;
+  --bg: #fff;
+  --bg2: #f8f9f5;
+  --tp: #1A1A2E;
+  --ts: #555770;
+  --bd: #E8E8EE;
+}
+
+html {
+  direction: rtl;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--bg2);
+  color: var(--tp);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}

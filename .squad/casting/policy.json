@@ -1,0 +1,6 @@
+{
+  "allowlistUniverses": ["The Lord of the Rings"],
+  "overflowStrategy": "generic",
+  "maxAgentsPerUniverse": 12,
+  "notes": "The Fellowship of the Ring provides our team identity"
+}

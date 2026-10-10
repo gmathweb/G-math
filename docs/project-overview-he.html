@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>G-Math — סקירת פרויקט</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Rubik', sans-serif; background: #F5F7FA; color: #1A1A2E; line-height: 1.8; padding: 32px 20px; }
+    .container { max-width: 800px; margin: 0 auto; }
+
+    .header { text-align: center; padding: 40px 0 32px; }
+    .logo { font-size: 42px; font-weight: 700; margin-bottom: 4px; }
+    .logo-g { color: #4CAF50; }
+    .logo-m { color: #1565C0; }
+    .tagline { font-size: 16px; color: #9E9EAF; margin-bottom: 8px; }
+    .date { font-size: 13px; color: #bbb; }
+
+    h2 { font-size: 22px; font-weight: 700; color: #1565C0; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 2px solid #E3F2FD; }
+    h3 { font-size: 17px; font-weight: 600; color: #333; margin: 20px 0 10px; }
+
+    .card { background: white; border-radius: 14px; padding: 24px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+    .card p { margin-bottom: 8px; color: #555; }
+
+    .status-badge { display: inline-block; padding: 3px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; color: white; }
+    .status-done { background: #4CAF50; }
+    .status-wip { background: #FF9800; }
+    .status-planned { background: #9E9E9E; }
+
+    .topics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 12px; }
+    @media (max-width: 600px) { .topics-grid { grid-template-columns: repeat(2, 1fr); } }
+    .topic-chip { background: white; border: 1px solid #E8E8EE; border-radius: 12px; padding: 16px; text-align: center; }
+    .topic-icon { font-size: 28px; margin-bottom: 6px; }
+    .topic-name { font-size: 15px; font-weight: 600; color: #1A1A2E; }
+    .topic-en { font-size: 12px; color: #9E9EAF; }
+
+    .tech-list { list-style: none; }
+    .tech-list li { padding: 6px 0; border-bottom: 1px solid #f0f0f0; }
+    .tech-list li:last-child { border: none; }
+    .tech-label { font-weight: 600; color: #1565C0; }
+
+    .timeline { list-style: none; position: relative; }
+    .timeline li { padding: 12px 0 12px 28px; position: relative; border-bottom: 1px solid #f0f0f5; }
+    .timeline li::before { content: ''; position: absolute; right: 0; top: 18px; width: 10px; height: 10px; border-radius: 50%; background: #4CAF50; }
+    .timeline li.wip::before { background: #FF9800; }
+    .timeline li.planned::before { background: #ccc; }
+
+    .screenshot-note { background: #FFFDE7; border: 1px solid #FFF9C4; border-radius: 10px; padding: 16px; margin-top: 12px; font-size: 14px; color: #795548; text-align: center; }
+
+    .footer { text-align: center; padding: 32px 0 16px; font-size: 13px; color: #bbb; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- Header -->
+    <div class="header">
+      <div class="logo"><span class="logo-g">G</span><span class="logo-m">Math</span></div>
+      <div class="tagline">מתמטיקה לכל</div>
+      <div class="date">סקירת פרויקט — אפריל 2026</div>
+    </div>
+
+    <!-- What is this? -->
+    <h2>📌 מה זה G-Math?</h2>
+    <div class="card">
+      <p><strong>G-Math</strong> היא פלטפורמת לימוד מתמטיקה אינטראקטיבית, המיועדת לתלמידי תיכון ומעלה.</p>
+      <p>הפלטפורמה תהיה פתוחה לכולם (ללא רישום) ותכלול מצגות, דפי עבודה ופעילויות אינטראקטיביות בכל נושא.</p>
+      <p>שפה ראשונית: <strong>עברית</strong> — בהמשך גם אנגלית וערבית.</p>
+      <p>הפלטפורמה מבוססת על האתר הקיים <a href="http://www.g-math.co.il" style="color:#1565C0">www.g-math.co.il</a> ומשדרגת אותו עם טכנולוגיה מודרנית.</p>
+    </div>
+
+    <!-- 9 Topics -->
+    <h2>📚 9 הנושאים הראשיים</h2>
+    <div class="card">
+      <p>הנושאים הראשיים קבועים ולא ניתנים לשינוי. נושאי המשנה והשיעורים ניתנים לעריכה.</p>
+      <div class="topics-grid">
+        <div class="topic-chip"><div class="topic-icon">📐</div><div class="topic-name">על המתמטיקה</div><div class="topic-en">About Mathematics</div></div>
+        <div class="topic-chip"><div class="topic-icon">➕</div><div class="topic-name">אלגברה</div><div class="topic-en">Algebra</div></div>
+        <div class="topic-chip"><div class="topic-icon">📊</div><div class="topic-name">טריגונומטריה</div><div class="topic-en">Trigonometry</div></div>
+        <div class="topic-chip"><div class="topic-icon">∫</div><div class="topic-name">חדו״א</div><div class="topic-en">Calculus</div></div>
+        <div class="topic-chip"><div class="topic-icon">🔲</div><div class="topic-name">הנדסת המרחב</div><div class="topic-en">Spatial Engineering</div></div>
+        <div class="topic-chip"><div class="topic-icon">📈</div><div class="topic-name">אנליטית</div><div class="topic-en">Analytic</div></div>
+        <div class="topic-chip"><div class="topic-icon">➡️</div><div class="topic-name">וקטורים</div><div class="topic-en">Vectors</div></div>
+        <div class="topic-chip"><div class="topic-icon">△</div><div class="topic-name">גיאומטריה</div><div class="topic-en">Geometry</div></div>
+        <div class="topic-chip"><div class="topic-icon">🎲</div><div class="topic-name">הסתברות</div><div class="topic-en">Probability</div></div>
+      </div>
+    </div>
+
+    <!-- Structure -->
+    <h2>🏗️ מבנה התוכן</h2>
+    <div class="card">
+      <p>הפלטפורמה בנויה ב-3 רמות:</p>
+      <p>📁 <strong>נושא ראשי</strong> (9 קבועים) → 📂 <strong>נושא משנה</strong> (ניתן לעריכה) → 📄 <strong>שיעור</strong> (ניתן לעריכה)</p>
+      <p>כל שיעור יכול לכלול:</p>
+      <ul style="padding-right: 24px; margin-top: 8px;">
+        <li>מצגת HTML (מיובאת)</li>
+        <li>דף עבודה אינטראקטיבי</li>
+        <li>פעילות GeoGebra</li>
+      </ul>
+    </div>
+
+    <!-- Current Status -->
+    <h2>📊 סטטוס נוכחי</h2>
+    <div class="card">
+      <ul class="timeline">
+        <li>
+          <strong>ריפוזיטורי GitHub</strong> — נוצר ומוכן
+          <span class="status-badge status-done">הושלם ✓</span>
+        </li>
+        <li>
+          <strong>צוות פיתוח (Squad)</strong> — 10 סוכנים מוגדרים עם תפקידים, מודלים וחוקים
+          <span class="status-badge status-done">הושלם ✓</span>
+        </li>
+        <li>
+          <strong>ארכיטקטורת מערכת</strong> — מסמך מלא (סכמת DB, API, frontend, backend)
+          <span class="status-badge status-done">הושלם ✓</span>
+        </li>
+        <li>
+          <strong>שלד הפרויקט</strong> — React + FastAPI + Docker + nginx
+          <span class="status-badge status-done">הושלם ✓</span>
+        </li>
+        <li class="wip">
+          <strong>דמו ויזואלי</strong> — דף בית עם 9 כרטיסיות נושאים, navbar, דפי נושא עם אקורדיון
+          <span class="status-badge status-wip">בעבודה</span>
+        </li>
+        <li class="planned">
+          <strong>עיצוב UX מלא</strong> — תכנון חוויית משתמש לכל הדפים
+          <span class="status-badge status-planned">מתוכנן</span>
+        </li>
+        <li class="planned">
+          <strong>Backend API</strong> — חיבור לבסיס נתונים ומערכת ניהול תוכן
+          <span class="status-badge status-planned">מתוכנן</span>
+        </li>
+        <li class="planned">
+          <strong>העלאת תוכן</strong> — מצגות, דפי עבודה ופעילויות
+          <span class="status-badge status-planned">מתוכנן</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Tech Stack -->
+    <h2>⚙️ טכנולוגיות</h2>
+    <div class="card">
+      <ul class="tech-list">
+        <li><span class="tech-label">Frontend:</span> React 18 + TypeScript + Vite</li>
+        <li><span class="tech-label">Backend:</span> Python FastAPI</li>
+        <li><span class="tech-label">בסיס נתונים:</span> PostgreSQL</li>
+        <li><span class="tech-label">שפות:</span> עברית (ראשי), אנגלית, ערבית — מנוהל עם react-i18next</li>
+        <li><span class="tech-label">כיוון:</span> RTL (ימין לשמאל) כברירת מחדל</li>
+        <li><span class="tech-label">Containers:</span> Docker Compose (frontend + backend + DB + nginx)</li>
+      </ul>
+    </div>
+
+    <!-- What we need -->
+    <h2>📝 מה צריך מכם</h2>
+    <div class="card">
+      <p>כדי להמשיך לשלב הבא נצטרך:</p>
+      <ul style="padding-right: 24px; margin-top: 8px; line-height: 2.2;">
+        <li>✅ אישור על 9 הנושאים הראשיים (רשימה למעלה)</li>
+        <li>📝 רשימת <strong>נושאי משנה</strong> לכל נושא ראשי</li>
+        <li>📝 רשימת <strong>שיעורים</strong> בכל נושא משנה</li>
+        <li>🎨 הלוגו / אייקון הסופי של G-Math</li>
+        <li>📄 מצגות HTML קיימות (אם יש) להעלאה</li>
+        <li>💬 הערות על העיצוב הנוכחי (צבעים, פריסה, חוויה)</li>
+      </ul>
+    </div>
+
+    <div class="screenshot-note">
+      💡 <strong>רוצה לראות את האתר בפעולה?</strong><br />
+      האתר רץ כרגע בסביבת פיתוח מקומית. ניתן לתאם הדגמה חיה.
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      G-Math Project · פרויקט G-Math &nbsp;·&nbsp; אפריל 2026
+    </div>
+  </div>
+</body>
+</html>
