@@ -19,32 +19,56 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: |
+            frontend/package-lock.json
+            admin-frontend/package-lock.json
+
+      # No VITE_* variables on purpose: both apps then call the same-origin /api/v1.
+      - name: Build public frontend
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run build
+
+      - name: Build admin frontend (served under /admin/)
+        working-directory: admin-frontend
+        run: |
+          npm ci
+          npm run build
+
       - name: Set up Python version
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      # 🛠️ Local Build Section (Optional)
-      # The following section in your workflow is designed to catch build issues early on the client side, before deployment. This can be helpful for debugging and validation. However, if this step significantly increases deployment time and early detection is not critical for your workflow, you may remove this section to streamline the deployment process.
-      - name: Create and Start virtual environment and Install dependencies
+      - name: Install backend dependencies and run tests
+        working-directory: backend
         run: |
-          cd backend
-          python -m venv antenv
-          source antenv/bin/activate
-          pip install -r requirements.txt
-                
-      # By default, when you enable GitHub CI/CD integration through the Azure portal, the platform automatically sets the SCM_DO_BUILD_DURING_DEPLOYMENT application setting to true. This triggers the use of Oryx, a build engine that handles application compilation and dependency installation (e.g., pip install) directly on the platform during deployment. Hence, we exclude the antenv virtual environment directory from the deployment artifact to reduce the payload size. 
+          python -m pip install -r requirements.txt
+          python -m pytest -q
+
+      # Oryx (SCM_DO_BUILD_DURING_DEPLOYMENT=true) runs pip install on Azure, so ship no venv.
+      - name: Assemble deployment package
+        run: |
+          mkdir -p deploy
+          rsync -a \
+            --exclude 'tests' --exclude '__pycache__' --exclude '*.db' \
+            --exclude '_test_media' --exclude '.pytest_cache' --exclude 'web' \
+            backend/ deploy/
+          mkdir -p deploy/web
+          cp -r frontend/dist deploy/web/public
+          cp -r admin-frontend/dist deploy/web/admin
+
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
           name: python-app
-          path: backend
-
-      # 🚫 Opting Out of Oryx Build
-      # If you prefer to disable the Oryx build process during deployment, follow these steps:
-      # 1. Remove the SCM_DO_BUILD_DURING_DEPLOYMENT app setting from your Azure App Service Environment variables.
-      # 2. Refer to sample workflows for alternative deployment strategies: https://github.com/Azure/actions-workflow-samples/tree/master/AppService
-      
+          path: deploy
 
   deploy:
     runs-on: ubuntu-latest
