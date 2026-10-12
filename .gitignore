@@ -42,3 +42,6 @@ media/content/.presentations/
 
 # Local compose overrides (contains generated secrets)
 docker-compose.override.yml
+
+# Built frontends served by FastAPI
+backend/web/

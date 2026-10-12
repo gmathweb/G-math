@@ -10,6 +10,7 @@ from app.config import settings
 from app.database import get_db
 from app.logging_config import setup_logging, RequestIdMiddleware
 from app.rate_limit import limiter
+from app.spa import mount_frontends
 from app.api.public.auth import router as auth_router
 from app.api.public.topics import router as public_topics_router
 from app.api.public.lessons import router as public_lessons_router
@@ -76,6 +77,9 @@ def create_app() -> FastAPI:
                 status_code=503,
                 content={"status": "unhealthy", "database": str(exc)},
             )
+
+    # Must stay last: the "/" mount is a catch-all for the React SPA.
+    mount_frontends(app)
 
     return app
 

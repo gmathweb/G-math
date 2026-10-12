@@ -6,6 +6,8 @@ export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), 'VITE_')
   const proxyTarget = env.VITE_PROXY_TARGET ?? 'http://localhost:8000'
   return {
+    // In production the admin build is served by FastAPI under /admin/.
+    base: command === 'build' ? '/admin/' : '/',
     plugins: [react(), tailwindcss()],
     resolve: { dedupe: ['react', 'react-dom'] },
     define: {
