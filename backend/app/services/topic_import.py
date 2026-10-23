@@ -1,15 +1,17 @@
 from __future__ import annotations
 
+import logging
 import uuid
 from collections import Counter
 
-from sqlalchemy import delete, func, select
+from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.content import ContentFile
 from app.models.lesson import Lesson
 from app.models.subtopic import Subtopic
 from app.models.topic import Topic
+from app.services.files import remove_content_storage
 from app.schemas.topic_import import (
     DeletedCounts,
     ImportCounts,
@@ -19,6 +21,7 @@ from app.schemas.topic_import import (
 from app.utils import slugify
 
 SLUG_MAX = 100
+logger = logging.getLogger(__name__)
 
 
 class TopicNotFound(Exception):
@@ -60,18 +63,26 @@ async def import_topic(
     db: AsyncSession, req: TopicImportRequest, *, dry_run: bool
 ) -> TopicImportResult:
     try:
-        result = await _run(db, req, dry_run)
+        result, orphaned = await _run(db, req, dry_run)
     except Exception:
         await db.rollback()
         raise
     if dry_run:
         await db.rollback()
-    else:
-        await db.commit()
+        return result
+    await db.commit()
+    # Disk cleanup happens only after the commit so a rollback never loses files.
+    for record in orphaned:
+        try:
+            await remove_content_storage(record)
+        except OSError:
+            logger.warning("Could not remove storage for %s", record.file_url)
     return result
 
 
-async def _run(db: AsyncSession, req: TopicImportRequest, dry_run: bool) -> TopicImportResult:
+async def _run(
+    db: AsyncSession, req: TopicImportRequest, dry_run: bool
+) -> tuple[TopicImportResult, list[ContentFile]]:
     topic = (
         await db.execute(select(Topic).where(Topic.slug == req.topic_slug))
     ).scalar_one_or_none()
@@ -116,18 +127,22 @@ async def _run(db: AsyncSession, req: TopicImportRequest, dry_run: bool) -> Topi
     created = ImportCounts()
     updated = ImportCounts()
     deleted = DeletedCounts()
+    orphaned: list[ContentFile] = []
 
     # Delete lessons (and their files) that are absent from the file. Explicit deletes,
     # because SQLite test DBs do not enforce FK cascades.
     gone_lesson_ids = [l.id for s, l in existing_lessons.items() if s not in all_lesson_slugs]
     if gone_lesson_ids:
-        deleted.content_files = (
-            await db.execute(
-                select(func.count()).select_from(ContentFile).where(
-                    ContentFile.lesson_id.in_(gone_lesson_ids)
+        orphaned = list(
+            (
+                await db.execute(
+                    select(ContentFile).where(ContentFile.lesson_id.in_(gone_lesson_ids))
                 )
-            )
-        ).scalar_one()
+            ).scalars()
+        )
+        deleted.content_files = len(orphaned)
+        for record in orphaned:
+            db.expunge(record)
         await db.execute(delete(ContentFile).where(ContentFile.lesson_id.in_(gone_lesson_ids)))
         await db.execute(delete(Lesson).where(Lesson.id.in_(gone_lesson_ids)))
         deleted.lessons = len(gone_lesson_ids)
@@ -171,7 +186,7 @@ async def _run(db: AsyncSession, req: TopicImportRequest, dry_run: bool) -> Topi
         deleted.subtopics = len(gone_subs)
     await db.flush()
 
-    return TopicImportResult(
+    result = TopicImportResult(
         dry_run=dry_run,
         applied=not dry_run,
         topic_slug=req.topic_slug,
@@ -179,3 +194,4 @@ async def _run(db: AsyncSession, req: TopicImportRequest, dry_run: bool) -> Topi
         updated=updated,
         deleted=deleted,
     )
+    return result, orphaned

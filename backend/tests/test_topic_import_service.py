@@ -174,3 +174,22 @@ def test_trigonometry_sample_file_is_valid():
     assert len(req.subtopics) == 10
     assert sum(len(s.lessons) for s in req.subtopics) == 42
     assert all(len(s.icon) <= 20 for s in req.subtopics)
+
+
+async def test_storage_removed_only_after_applied_import(db_session, monkeypatch):
+    removed = []
+
+    async def fake_remove(record):
+        removed.append(record.display_name)
+
+    monkeypatch.setattr("app.services.topic_import.remove_content_storage", fake_remove)
+    t = await _topic(db_session)
+    slug = t.slug
+    await import_topic(db_session, _req(slug, [_sub("A", ["x", "y"])]), dry_run=False)
+    await _add_file(db_session, f"{slug}--a--y")
+
+    await import_topic(db_session, _req(slug, [_sub("A", ["x"])]), dry_run=True)
+    assert removed == []
+
+    await import_topic(db_session, _req(slug, [_sub("A", ["x"])]), dry_run=False)
+    assert removed == ["v"]
