@@ -1,11 +1,12 @@
 import { useEffect, useId, useRef, useState } from 'react';
-import { PresentationNavigation, type PresentationChoice } from './PresentationNavigation';
+import { PresentationNavigation } from './PresentationNavigation';
 import { usePresentationPlayer } from './usePresentationPlayer';
 import './PresentationViewer.css';
 
 export interface ViewerLabels {
-  fullPage: string;
-  exitFullPage: string;
+  fullScreen: string;
+  exitFullScreen: string;
+  escKey: string;
   expanded: string;
   loading: string;
   slow: string;
@@ -13,30 +14,20 @@ export interface ViewerLabels {
   open: string;
   unsupported: string;
   controls: string;
-  navigation: string;
-  expandNavigation: string;
-  collapseNavigation: string;
   page: string;
   previousPage: string;
   nextPage: string;
   nativeNavigation: string;
   navigationError: string;
-  resources: string;
 }
 
 interface PresentationViewerProps {
   url: string;
   title: string;
   labels: ViewerLabels;
-  files?: readonly PresentationChoice[];
-  activeId?: string;
-  onSelect?: (id: string) => void;
-  resources?: readonly PresentationChoice[];
 }
 
-export function PresentationViewer({
-  url, title, labels, files = [], activeId, onSelect, resources = [],
-}: PresentationViewerProps) {
+export function PresentationViewer({ url, title, labels }: PresentationViewerProps) {
   const presentationOrigin = (import.meta.env.VITE_PRESENTATION_ORIGIN ?? '').replace(/\/$/, '');
   const source = url.startsWith('/api/v1/presentations/') ? `${presentationOrigin}${url}` : url;
   const root = useRef<HTMLDivElement>(null);
@@ -47,7 +38,6 @@ export function PresentationViewer({
   const [loadedKey, setLoadedKey] = useState('');
   const [slowKey, setSlowKey] = useState('');
   const [frameError, setFrameError] = useState({ key: '', message: '' });
-  const [navigationExpanded, setNavigationExpanded] = useState(false);
   const id = useId();
   const unsupported = /\.pptx(?:[?#]|$)/i.test(url);
   const nativePdf = /\.pdf(?:[?#]|$)/i.test(url);
@@ -102,11 +92,6 @@ export function PresentationViewer({
     setAttempt(value => value + 1);
   }
 
-  function chooseFile(fileId: string) {
-    onSelect?.(fileId);
-    if (window.matchMedia('(max-width: 600px)').matches) setNavigationExpanded(false);
-  }
-
   function focusStage() {
     root.current?.querySelector<HTMLElement>(
       '.presentation-stage button, .presentation-stage a[href], .presentation-stage iframe',
@@ -119,12 +104,10 @@ export function PresentationViewer({
     )?.focus();
   }
 
-  const fullPageLabel = enlarged ? labels.exitFullPage : labels.fullPage;
-
   return (
     <div
       ref={root}
-      className={`presentation-viewer ${navigationExpanded ? 'navigation-open' : ''} ${enlarged ? 'presentation-viewer-expanded' : ''}`}
+      className={enlarged ? 'presentation-viewer presentation-viewer-expanded' : 'presentation-viewer'}
       role={enlarged ? 'dialog' : 'region'}
       aria-modal={enlarged || undefined}
       aria-labelledby={id}
@@ -167,13 +150,9 @@ export function PresentationViewer({
           </>
         )}
       </div>
-      <PresentationNavigation expanded={navigationExpanded}
-        onToggle={() => setNavigationExpanded(value => !value)} panelId={`${id}-navigation`}
-        labels={labels} title={title} pages={player.pages} native={player.native}
-        onPage={player.command} enlarged={enlarged} fullPageLabel={fullPageLabel}
-        fullPageButton={fullPageButton} onFullPage={() => setEnlarged(value => !value)}
-        files={files} activeId={activeId} onSelect={chooseFile}
-        resources={resources} />
+      <PresentationNavigation labels={labels} title={title} pages={player.pages} native={player.native}
+        onPage={player.command} enlarged={enlarged} fullPageButton={fullPageButton}
+        onFullPage={() => setEnlarged(value => !value)} />
       {enlarged && <span tabIndex={0} onFocus={focusStage} className="viewer-focus-guard" />}
     </div>
   );

@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import type { MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
 import type { PublicLessonSummary } from '../../types';
+import { Icon } from '../ui/Icon';
+import { LessonList } from './LessonList';
 
 interface LessonDrawerProps {
   id: string;
@@ -20,68 +21,29 @@ interface DrawerBodyProps extends Omit<LessonDrawerProps, 'open' | 'onClose'> {
 
 function DrawerBody({ id, titleId, close, lessons, currentSlug, basePath }: DrawerBodyProps) {
   const { t } = useTranslation();
-  const [filter, setFilter] = useState('');
-  const needle = filter.trim().toLocaleLowerCase();
-  const visible = lessons
-    .map((lesson, index) => ({ lesson, index }))
-    .filter(({ lesson }) => !needle || lesson.name.toLocaleLowerCase().includes(needle));
 
   return (
     <>
+      <span className="ov-handle" aria-hidden="true" />
       <div className="ov-hdr">
-        <h2 id={titleId}><span aria-hidden="true">📋</span> {t('tree.lessonsButton')}</h2>
-        <button type="button" className="ov-close" aria-label={t('tree.close')} onClick={close}>
-          <span aria-hidden="true">✕</span>
+        <h2 id={titleId}>
+          <Icon name="list" />
+          {t('tree.sidebarTitle')}
+          <span className="ls-count">{lessons.length}</span>
+        </h2>
+        <button type="button" className="btn btn--ghost btn--icon" aria-label={t('tree.close')} title={t('tree.close')} onClick={close}>
+          <Icon name="close" />
         </button>
       </div>
-      <div className="ov-srch" role="search">
-        <label htmlFor={`${id}-filter`} className="sr-only">{t('tree.filterLessons')}</label>
-        <input
-          id={`${id}-filter`}
-          type="text"
-          enterKeyHint="search"
-          autoComplete="off"
-          placeholder={t('tree.filterLessons')}
-          value={filter}
-          onChange={event => setFilter(event.target.value)}
-        />
-      </div>
-      <div className="ov-list">
-        <div role="status">
-          {visible.length === 0 && <p className="ov-empty">{t('tree.noMatches')}</p>}
-        </div>
-        {visible.length > 0 && (
-          <ul>
-            {visible.map(({ lesson, index }) => {
-              const current = lesson.slug === currentSlug;
-              return (
-                <li key={lesson.id}>
-                  <Link
-                    to={`${basePath}/${lesson.slug}`}
-                    className={current ? 'ov-it on' : 'ov-it'}
-                    aria-current={current ? 'page' : undefined}
-                    onClick={close}
-                  >
-                    <span className="ov-it-num" aria-hidden="true">{index + 1}</span>
-                    <span className="ov-it-info">
-                      <span className="ov-it-name">{lesson.name}</span>
-                      {current && <span className="ov-now">{t('tree.currentLesson')}</span>}
-                    </span>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </div>
+      <LessonList id={id} lessons={lessons} currentSlug={currentSlug} basePath={basePath} onNavigate={close} />
     </>
   );
 }
 
 /**
- * Mockup lessons overlay (.ov-panel) as a native modal <dialog>: the browser traps focus,
- * makes the page inert and closes on Escape. The body only mounts while open, so the
- * filter starts empty each time.
+ * Lessons list as a native modal <dialog> for viewports without the persistent sidebar
+ * (side panel on tablet, bottom sheet on phones): the browser traps focus, makes the page
+ * inert and closes on Escape. The body only mounts while open, so the filter starts empty.
  */
 export function LessonDrawer({ id, open, onClose, lessons, currentSlug, basePath }: LessonDrawerProps) {
   const dialog = useRef<HTMLDialogElement>(null);

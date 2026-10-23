@@ -17,6 +17,21 @@
   --shadow-c: rgba(0, 0, 0, .08);
   --focus: #4A90D9;
   --footer-h: 52px;
+  --hdr-h: 64px;
+
+  /* Lesson page: spacing scale, radii, elevation, blue family, layout */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 12px; --sp-4: 16px; --sp-5: 24px; --sp-6: 32px;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --shadow-1: 0 1px 2px rgba(15, 23, 42, .06), 0 1px 3px rgba(15, 23, 42, .08);
+  --shadow-2: 0 4px 12px rgba(15, 23, 42, .08), 0 16px 32px -8px rgba(15, 23, 42, .12);
+  --g-blue-hover: #0D47A1;
+  --g-blue-wash: #F1F7FD;
+  --g-green-light: #E8F5E9;
+  --g-green-dark: #2E7D32;
+  --stage-bg: #fff;
+  --side-w: clamp(260px, 22vw, 340px);
+  --ease: cubic-bezier(.2, 0, 0, 1);
 
   /* Legacy aliases (PresentationViewer.css) */
   --bg-secondary: var(--bg2);
@@ -95,6 +110,10 @@ button { font-family: inherit; }
   flex-wrap: wrap;
   gap: 8px;
 }
+/* Lesson route: the footer scrolls with the page so the viewer keeps its height (see AppShell). */
+html[data-footer="flow"] body { padding-bottom: 0; }
+html[data-footer="flow"] .ftr { position: static; }
+
 .fb { font-size: .85rem; color: var(--tm); }
 .fb b { color: var(--g-blue); }
 .fn { display: flex; gap: 12px; }
