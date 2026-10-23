@@ -6,18 +6,16 @@ import FileUploadForm from './FileUploadForm';
 import type { Lesson, UploadedFile } from '../types';
 
 const labels: ViewerLabels = {
-  fullPage: 'תצוגת עמוד מלא', exitFullPage: 'יציאה מתצוגת עמוד מלא',
-  expanded: 'תצוגת עמוד מלא', loading: 'טוען מצגת…',
+  fullScreen: 'מסך מלא', exitFullScreen: 'יציאה ממסך מלא', escKey: 'Esc',
+  expanded: 'תצוגת מסך מלא. לחצו Esc ליציאה.', loading: 'טוען מצגת…',
   slow: 'טעינת המצגת נמשכת יותר מהרגיל.',
   retry: 'טעינה מחדש של המצגת', open: 'פתיחה בלשונית חדשה',
   unsupported: 'קובץ זה אינו ניתן להצגה בדפדפן. אפשר לפתוח או להוריד אותו.',
   controls: 'פקדי המצגת',
-  navigation: 'מצגות', expandNavigation: 'הצגת המצגות', collapseNavigation: 'הסתרת המצגות',
   page: 'עמוד',
   previousPage: 'העמוד הקודם', nextPage: 'העמוד הבא',
   nativeNavigation: 'אפשר לנווט באמצעות פקדי המצגת עצמה.',
   navigationError: 'לא ניתן לפתוח את העמוד. נסו שוב.',
-  resources: 'חומרי השיעור',
 };
 
 export default function PresentationManager({ lesson, onClose }: { lesson: Lesson; onClose: () => void }) {
@@ -63,9 +61,7 @@ export default function PresentationManager({ lesson, onClose }: { lesson: Lesso
         {preview ? (
           <>
             <button type="button" onClick={() => setPreviewId(null)} className={`${buttonClass} self-start shrink-0`}>חזרה לניהול המצגות</button>
-            <PresentationViewer url={preview.file_url} title={preview.display_name} labels={labels}
-              files={presentations} activeId={preview.id} onSelect={setPreviewId}
-              resources={files.filter(file => file.file_type !== 'presentation')} />
+            <PresentationViewer url={preview.file_url} title={preview.display_name} labels={labels} />
           </>
         ) : (
           <>
