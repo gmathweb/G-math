@@ -17,9 +17,8 @@ import './LessonPage.css';
 
 const SIDEBAR_KEY = 'gm.lesson.sidebar';
 
-/** Remembers the student's sidebar choice; without one, mid-size desktops start as a rail to favour the stage. */
+/** Remembers the student's sidebar choice; the sidebar starts open on every desktop width. */
 function useSidebarCollapsed(): [boolean, () => void] {
-  const wide = useMediaQuery('(min-width: 1280px)');
   const [stored, setStored] = useState<'open' | 'collapsed' | null>(() => {
     try {
       const value = window.localStorage.getItem(SIDEBAR_KEY);
@@ -28,7 +27,7 @@ function useSidebarCollapsed(): [boolean, () => void] {
       return null;
     }
   });
-  const collapsed = stored ? stored === 'collapsed' : !wide;
+  const collapsed = stored === 'collapsed';
   const toggle = useCallback(() => {
     const next = collapsed ? 'open' : 'collapsed';
     setStored(next);
@@ -151,36 +150,35 @@ export function LessonPage() {
 
   return (
     <div className="lesson-page">
+      <div className="lh-top">
+        <Link to={subtopicPath} className="btn btn--secondary lh-back">
+          <Icon name="arrow-start" />
+          <span className="lh-back-text">{t('lesson.backTo', { name: subtopicName })}</span>
+        </Link>
+        <nav className="bc" aria-label={t('tree.breadcrumb')}>
+          <ol>
+            <li>
+              <Link to="/#topics"><Icon name="home" size={16} />{t('lesson.allTopics')}</Link>
+            </li>
+            <li>
+              <Icon name="chevron" size={14} className="bc-sep" />
+              <Link to={topicPath}><bdi>{topicName}</bdi></Link>
+            </li>
+            <li>
+              <Icon name="chevron" size={14} className="bc-sep" />
+              <Link to={subtopicPath}><bdi>{subtopicName}</bdi></Link>
+            </li>
+            {lessonName && (
+              <li>
+                <Icon name="chevron" size={14} className="bc-sep" />
+                <span aria-current="page"><bdi>{lessonName}</bdi></span>
+              </li>
+            )}
+          </ol>
+        </nav>
+      </div>
       <div className="lesson-screen">
         <div className="lesson-head">
-          <div className="lh-top">
-            <Link to={subtopicPath} className="btn btn--secondary lh-back">
-              <Icon name="arrow-start" />
-              <span className="lh-back-text">{t('lesson.backTo', { name: subtopicName })}</span>
-            </Link>
-            <nav className="bc" aria-label={t('tree.breadcrumb')}>
-              <ol>
-                <li>
-                  <Link to="/#topics"><Icon name="home" size={16} />{t('lesson.allTopics')}</Link>
-                </li>
-                <li>
-                  <Icon name="chevron" size={14} className="bc-sep" />
-                  <Link to={topicPath}><bdi>{topicName}</bdi></Link>
-                </li>
-                <li>
-                  <Icon name="chevron" size={14} className="bc-sep" />
-                  <Link to={subtopicPath}><bdi>{subtopicName}</bdi></Link>
-                </li>
-                {lessonName && (
-                  <li>
-                    <Icon name="chevron" size={14} className="bc-sep" />
-                    <span aria-current="page"><bdi>{lessonName}</bdi></span>
-                  </li>
-                )}
-              </ol>
-            </nav>
-          </div>
-
           <div className="lh-main">
             <div className="lh-title">
               <div className="lh-title-row">

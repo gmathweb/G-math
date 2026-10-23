@@ -8,8 +8,20 @@
 .lesson-screen { flex: none; display: flex; flex-direction: column; min-height: calc(100dvh - var(--hdr-h)); }
 
 /* ─── Header zone ─── */
-.lesson-head { display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-3) 28px var(--sp-2); }
-.lh-top { display: flex; align-items: center; gap: var(--sp-3); min-width: 0; }
+.lesson-head { display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-1) 28px var(--sp-2); }
+/* Stays pinned under the app header while scrolling to the materials below the fold. */
+.lh-top {
+  position: sticky;
+  top: var(--hdr-h);
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-width: 0;
+  padding: var(--sp-2) 28px;
+  background: var(--bg);
+  border-bottom: 1px solid var(--bd);
+}
 .lh-back { flex-shrink: 0; max-width: min(280px, 45%); min-height: 40px; padding-block: 6px; }
 .lh-back-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -161,7 +173,7 @@
 
 /* ─── Responsive ─── */
 @media (max-width: 1023px) {
-  .lesson-body, .lesson-head, .lesson-materials { padding-inline: 20px; }
+  .lesson-body, .lesson-head, .lesson-materials, .lh-top { padding-inline: 20px; }
 }
 
 @media (max-width: 900px) {
@@ -172,7 +184,7 @@
 }
 
 @media (max-width: 600px) {
-  .lesson-head, .lesson-body, .lesson-materials { padding-inline: 12px; }
+  .lesson-head, .lesson-body, .lesson-materials, .lh-top { padding-inline: 12px; }
   .lesson-body { min-height: 420px; gap: var(--sp-2); }
   .lh-top { gap: var(--sp-2); }
   .lh-back { max-width: 55%; }
