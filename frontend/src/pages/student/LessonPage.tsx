@@ -150,34 +150,34 @@ export function LessonPage() {
 
   return (
     <div className="lesson-page">
-      <div className="lh-top">
-        <Link to={subtopicPath} className="btn btn--secondary lh-back">
-          <Icon name="arrow-start" />
-          <span className="lh-back-text">{t('lesson.backTo', { name: subtopicName })}</span>
-        </Link>
-        <nav className="bc" aria-label={t('tree.breadcrumb')}>
-          <ol>
-            <li>
-              <Link to="/#topics"><Icon name="home" size={16} />{t('lesson.allTopics')}</Link>
-            </li>
-            <li>
-              <Icon name="chevron" size={14} className="bc-sep" />
-              <Link to={topicPath}><bdi>{topicName}</bdi></Link>
-            </li>
-            <li>
-              <Icon name="chevron" size={14} className="bc-sep" />
-              <Link to={subtopicPath}><bdi>{subtopicName}</bdi></Link>
-            </li>
-            {lessonName && (
+      <div className="lesson-screen">
+        <div className="lh-top">
+          <Link to={subtopicPath} className="btn btn--secondary lh-back">
+            <Icon name="arrow-start" />
+            <span className="lh-back-text">{t('lesson.backTo', { name: subtopicName })}</span>
+          </Link>
+          <nav className="bc" aria-label={t('tree.breadcrumb')}>
+            <ol>
+              <li>
+                <Link to="/#topics"><Icon name="home" size={16} />{t('lesson.allTopics')}</Link>
+              </li>
               <li>
                 <Icon name="chevron" size={14} className="bc-sep" />
-                <span aria-current="page"><bdi>{lessonName}</bdi></span>
+                <Link to={topicPath}><bdi>{topicName}</bdi></Link>
               </li>
-            )}
-          </ol>
-        </nav>
-      </div>
-      <div className="lesson-screen">
+              <li>
+                <Icon name="chevron" size={14} className="bc-sep" />
+                <Link to={subtopicPath}><bdi>{subtopicName}</bdi></Link>
+              </li>
+              {lessonName && (
+                <li>
+                  <Icon name="chevron" size={14} className="bc-sep" />
+                  <span aria-current="page"><bdi>{lessonName}</bdi></span>
+                </li>
+              )}
+            </ol>
+          </nav>
+        </div>
         <div className="lesson-head">
           <div className="lh-main">
             <div className="lh-title">
