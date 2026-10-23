@@ -46,6 +46,8 @@
     "noLessons": "אין עדיין שיעורים",
     "lessonsCount": "{{count}} שיעורים",
     "lessonsCount_one": "שיעור אחד",
+    "subtopicsCount": "{{count}} נושאים",
+    "subtopicsCount_one": "נושא אחד",
     "topicTabs": "ניווט בין נושאים",
     "notFound": "הדף לא נמצא",
     "backHome": "חזרה לדף הבית",

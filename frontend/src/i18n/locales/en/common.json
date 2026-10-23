@@ -46,6 +46,8 @@
     "noLessons": "No lessons yet",
     "lessonsCount": "{{count}} lessons",
     "lessonsCount_one": "{{count}} lesson",
+    "subtopicsCount": "{{count}} topics",
+    "subtopicsCount_one": "{{count}} topic",
     "topicTabs": "Topic navigation",
     "notFound": "Page not found",
     "backHome": "Back to home",

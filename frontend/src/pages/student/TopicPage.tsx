@@ -60,6 +60,7 @@ export function TopicPage() {
   const needle = query.trim().toLocaleLowerCase();
   const matches = (text: string) => text.toLocaleLowerCase().includes(needle);
   const subtopics = topic?.subtopics ?? [];
+  const totalLessons = subtopics.reduce((sum, subtopic) => sum + subtopic.lessons.length, 0);
   const visible = subtopics
     .map((subtopic, index) => {
       const lessons = !needle || matches(subtopic.name)
@@ -113,6 +114,11 @@ export function TopicPage() {
                   onChange={event => setSearch({ slug: topicSlug, text: event.target.value })}
                 />
               </div>
+              <span className="tp-count" role="status">
+                {needle
+                  ? t('tree.subtopicsCount', { count: visible.length })
+                  : `${t('tree.subtopicsCount', { count: subtopics.length })} · ${t('tree.lessonsCount', { count: totalLessons })}`}
+              </span>
             </div>
           )}
 
@@ -154,14 +160,28 @@ export function TopicPage() {
                             <SubtopicGlyph icon={subtopic.icon || fallbackSubtopicIcon(index)} />
                           </span>
                           <span className="tp-card-body">
-                            <span className="tp-card-name">{subtopic.name}</span>
-                            <span className="tp-card-meta">
-                              <span
-                                className="tp-card-dot"
-                                style={{ background: shadeColor(color, index, subtopics.length) }}
-                                aria-hidden="true"
-                              />
-                              {t('tree.lessonsCount', { count: subtopic.lessons.length })}
+                            <span className="tp-card-text">
+                              <span className="tp-card-name">{subtopic.name}</span>
+                              <span className="tp-card-meta">
+                                <span
+                                  className="tp-card-dot"
+                                  style={{ background: shadeColor(color, index, subtopics.length) }}
+                                  aria-hidden="true"
+                                />
+                                {t('tree.lessonsCount', { count: subtopic.lessons.length })}
+                              </span>
+                            </span>
+                            <span className="tp-card-chev" aria-hidden="true">
+                              <svg
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d="M6 9l6 6 6-6" />
+                              </svg>
                             </span>
                           </span>
                         </button>

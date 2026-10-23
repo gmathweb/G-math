@@ -85,6 +85,10 @@
 
 /* ─── Search bar ─── */
 .tp-bar {
+  position: sticky;
+  /* Sit below the global sticky header (.hdr, 72px, z-index 100). */
+  top: 72px;
+  z-index: 5;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -93,7 +97,7 @@
   background: var(--overlay-bg);
   border-bottom: 1px solid var(--bd);
 }
-.tp-search { position: relative; flex-shrink: 0; }
+.tp-search { position: relative; flex-shrink: 0; width: min(100%, 480px); }
 .tp-search::before {
   content: '🔍';
   content: '🔍' / '';
@@ -108,7 +112,7 @@
 .tp-si {
   -webkit-appearance: none;
   appearance: none;
-  width: 220px;
+  width: 100%;
   min-height: 40px;
   padding-block: 8px;
   padding-inline: 32px 14px;
@@ -118,10 +122,11 @@
   color: var(--tp);
   font-family: inherit;
   font-size: .82rem;
-  transition: width .2s, border-color .2s, box-shadow .2s;
+  transition: border-color .2s, box-shadow .2s;
 }
-.tp-si:focus { outline: none; border-color: var(--g-blue); box-shadow: 0 0 0 3px rgba(21, 101, 192, .25); width: 260px; }
+.tp-si:focus { outline: none; border-color: var(--g-blue); box-shadow: 0 0 0 3px rgba(21, 101, 192, .25); }
 .tp-si::placeholder { color: var(--tm); }
+.tp-count { font-size: .8rem; color: var(--tm); white-space: nowrap; }
 
 /* ─── Subtopic cards ─── */
 .tp-grid {
@@ -129,7 +134,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   align-items: start;
-  gap: 18px;
+  gap: 14px;
   padding: 20px 28px 40px;
 }
 .tp-card {
@@ -138,13 +143,13 @@
   flex-direction: column;
   overflow: hidden;
   background: var(--card-bg);
-  border: 2px solid var(--bd);
-  border-radius: 18px;
+  border: 1px solid var(--bd);
+  border-radius: 14px;
   transition: border-color .35s, box-shadow .35s;
 }
 .tp-card:hover,
 .tp-card.expanded,
-.tp-card:focus-within { border-color: #a5b4fc; box-shadow: 0 8px 28px rgba(0, 0, 0, .1); }
+.tp-card:focus-within { border-color: var(--hover-c); box-shadow: 0 4px 14px rgba(40, 45, 120, .08); }
 
 .tp-card-h { margin: 0; font: inherit; }
 .tp-card-toggle {
@@ -159,7 +164,7 @@
   text-align: center;
   cursor: pointer;
 }
-.tp-card-toggle:focus-visible { outline-offset: -3px; border-radius: 16px 16px 0 0; }
+.tp-card-toggle:focus-visible { outline-offset: -3px; border-radius: 12px 12px 0 0; }
 /* The card header art would cover an inset ring, so ring the whole card instead. */
 @supports selector(:has(*)) {
   .tp-card-toggle:focus-visible { outline: none; }
@@ -172,52 +177,71 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 140px;
+  height: 92px;
   overflow: hidden;
-  border-radius: 16px 16px 0 0;
+  border-radius: 12px 12px 0 0;
 }
 .tp-card-img::after {
   content: '';
   position: absolute;
   bottom: -1px;
   inset-inline: -5%;
-  height: 24px;
+  height: 12px;
   background: var(--card-bg);
   border-radius: 50% 50% 0 0;
 }
-.tp-card-img svg { width: 70px; height: 70px; opacity: .85; }
+.tp-card-img svg { width: 52px; height: 52px; opacity: .78; }
 .tp-overlay {
   position: absolute;
   z-index: 2;
   color: #fff;
   font-family: serif;
-  font-size: 2.6rem;
+  font-size: 1.9rem;
   font-weight: 700;
   line-height: 1;
   filter: drop-shadow(0 2px 6px rgba(0, 0, 0, .15));
 }
-.tp-overlay-solo { position: relative; font-size: 3.2rem; }
+.tp-overlay-solo { position: relative; font-size: 2.2rem; }
 
-.tp-card-body { display: block; padding: 14px 16px 12px; }
+.tp-card-body {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  text-align: start;
+}
+.tp-card-text { flex: 1 1 auto; min-width: 0; }
 .tp-card-name { display: block; margin-bottom: 4px; font-size: 1.05rem; font-weight: 700; line-height: 1.3; }
 .tp-card-meta {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 6px;
   font-size: .8rem;
   color: var(--tm);
+  opacity: .85;
 }
-.tp-card-dot { width: 8px; height: 8px; border-radius: 50%; opacity: .25; transition: opacity .2s; }
+.tp-card-dot { width: 6px; height: 6px; border-radius: 50%; opacity: .2; transition: opacity .2s; }
 .tp-card:hover .tp-card-dot,
 .tp-card.expanded .tp-card-dot { opacity: 1; }
+.tp-card-chev {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline-start: auto;
+  color: var(--tm);
+  transition: transform .22s, color .22s;
+}
+.tp-card-chev svg { width: 20px; height: 20px; }
+.tp-card.expanded .tp-card-chev { transform: rotate(180deg); color: var(--hover-c); }
 
 /* Lessons open in place on .expanded (click/tap/keyboard); the toggle button is the only trigger. */
 .tp-lessons {
   display: grid;
   grid-template-rows: 0fr;
   visibility: hidden;
-  transition: grid-template-rows .4s cubic-bezier(.4, 0, .2, 1), visibility .4s;
+  transition: grid-template-rows .22s cubic-bezier(.4, 0, .2, 1), visibility .22s;
 }
 .tp-card.expanded .tp-lessons { grid-template-rows: 1fr; visibility: visible; }
 .tp-lessons-clip { min-height: 0; overflow: hidden; }
@@ -266,4 +290,15 @@
   .tp-bar { padding-inline: 14px; }
   .tp-grid { padding-inline: 14px; }
   .tp-search, .tp-si, .tp-si:focus { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tp-lessons,
+  .tp-card,
+  .tp-si,
+  .tp-card-chev,
+  .tp-card-toggle,
+  .tp-card-toggle:active,
+  .tp-lbtn,
+  .tp-lbtn:active { transition: none; }
 }
