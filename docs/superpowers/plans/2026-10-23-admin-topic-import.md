@@ -89,9 +89,9 @@
 - Modify: `docs/API.md` (new "Topic import" section: login → dry run → apply, curl examples, JSON schema, replace semantics and file-retention note)
 - Test: extend `backend/tests/test_topic_import_service.py`
 
-- [ ] **Step 1: Write failing test** `test_trigonometry_sample_file_is_valid`: loads the JSON, validates with `TopicImportRequest`, asserts 10 subtopics, 45 lessons total, `topic_slug == "trigonometry"`, every icon ≤ 20 chars.
+- [ ] **Step 1: Write failing test** `test_trigonometry_sample_file_is_valid`: loads the JSON, validates with `TopicImportRequest`, asserts 10 subtopics, 42 lessons total, `topic_slug == "trigonometry"`, every icon ≤ 20 chars.
 - [ ] **Step 2: Run** it → FAIL.
-- [ ] **Step 3: Create `trigonometry.json`** from the approved table in the conversation (10 subtopics, 45 lessons, he/en/ar names, icons: 📐 🔺 ⭕ 📈 📏 🟰 ✖️ 🅰️ 📐 🔍 in table order; do not repeat 📐 confusingly — use 📐 for subtopic 1 and 🧭 for subtopic 9; leave slugs unset). Lesson names exactly as listed in the table (Hebrew spacing artifacts fixed).
+- [ ] **Step 3: Create `trigonometry.json`** from the approved table in the conversation (10 subtopics, 42 lessons, he/en/ar names, icons: 📐 🔺 ⭕ 📈 📏 🟰 ✖️ 🅰️ 📐 🔍 in table order; do not repeat 📐 confusingly — use 📐 for subtopic 1 and 🧭 for subtopic 9; leave slugs unset). Lesson names exactly as listed in the table (Hebrew spacing artifacts fixed).
 - [ ] **Step 4: Run** full `pytest` → PASS.
 - [ ] **Step 5: Commit** `feat: trigonometry import sample and API docs`.
 

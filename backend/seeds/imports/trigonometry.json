@@ -1,0 +1,127 @@
+{
+  "topic_slug": "trigonometry",
+  "subtopics": [
+    {
+      "name_he": "הגדרת הפונקציות הטריגונומטריות",
+      "name_en": "Definition of Trigonometric Functions",
+      "name_ar": "تعريف الدوال المثلثية",
+      "icon": "📐",
+      "lessons": [
+        {"name_he": "משולש ישר זווית ופיתגורס", "name_en": "Right Triangle & Pythagoras", "name_ar": "المثلث القائم والفيثاغورس"},
+        {"name_he": "הכרות סינוס", "name_en": "Introducing Sine", "name_ar": "التعرّف على الجيب (sin)"},
+        {"name_he": "הכרות קוסינוס", "name_en": "Introducing Cosine", "name_ar": "التعرّف على جيب التمام (cos)"},
+        {"name_he": "הכרות טנגנס", "name_en": "Introducing Tangent", "name_ar": "التعرّف على الظل (tan)"},
+        {"name_he": "חישובי גדלים", "name_en": "Calculating Quantities", "name_ar": "حساب المقادير"},
+        {"name_he": "מעגל ומצולע - הכרות", "name_en": "Circle & Polygon: Introduction", "name_ar": "الدائرة والمضلّع: مقدّمة"},
+        {"name_he": "מעגל חוסם / מעגל חסום", "name_en": "Circumscribed / Inscribed Circle", "name_ar": "الدائرة المحيطة / المحاطة"}
+      ]
+    },
+    {
+      "name_he": "נוסחת שטח משולש",
+      "name_en": "Triangle Area Formula",
+      "name_ar": "قانون مساحة المثلث",
+      "icon": "🔺",
+      "lessons": [
+        {"name_he": "הצגת נוסחת שטח משולש", "name_en": "Presenting the Triangle Area Formula", "name_ar": "عرض قانون مساحة المثلث"}
+      ]
+    },
+    {
+      "name_he": "הרחבת הגדרת הפונקציות הטריגונומטריות",
+      "name_en": "Extending the Trigonometric Definitions",
+      "name_ar": "توسيع تعريف الدوال المثلثية",
+      "icon": "⭕",
+      "lessons": [
+        {"name_he": "פונ' סינוס וקוסינוס - מעגל היחידה", "name_en": "Sine & Cosine: The Unit Circle", "name_ar": "الجيب وجيب التمام: دائرة الوحدة"},
+        {"name_he": "פונ' טנגנס", "name_en": "Tangent Function", "name_ar": "دالة الظل"},
+        {"name_he": "מחזוריות", "name_en": "Periodicity", "name_ar": "الدورية"},
+        {"name_he": "פשר המילה סינוס", "name_en": "Origin of the Word Sine", "name_ar": "أصل كلمة الجيب"}
+      ]
+    },
+    {
+      "name_he": "תכונות הפונקציות הטריגונומטריות",
+      "name_en": "Properties of Trigonometric Functions",
+      "name_ar": "خصائص الدوال المثلثية",
+      "icon": "📈",
+      "lessons": [
+        {"name_he": "תכונות סינוס", "name_en": "Sine Properties", "name_ar": "خصائص الجيب"},
+        {"name_he": "תכונות קוסינוס", "name_en": "Cosine Properties", "name_ar": "خصائص جيب التمام"}
+      ]
+    },
+    {
+      "name_he": "זוויות מיוחדות",
+      "name_en": "Special Angles",
+      "name_ar": "الزوايا الخاصة",
+      "icon": "📏",
+      "lessons": [
+        {"name_he": "טבלת ערכים", "name_en": "Table of Values", "name_ar": "جدول القيم"}
+      ]
+    },
+    {
+      "name_he": "זהויות טריגונומטריות",
+      "name_en": "Trigonometric Identities",
+      "name_ar": "المتطابقات المثلثية",
+      "icon": "🟰",
+      "lessons": [
+        {"name_he": "זהויות ראשונות", "name_en": "Basic Identities", "name_ar": "المتطابقات الأساسية"},
+        {"name_he": "סכום / הפרש זוויות", "name_en": "Sum / Difference of Angles", "name_ar": "مجموع / فرق زاويتين"},
+        {"name_he": "סכום / הפרש זהויות", "name_en": "Sum / Difference Identities", "name_ar": "متطابقات المجموع / الفرق"}
+      ]
+    },
+    {
+      "name_he": "משוואות טריגונומטריות",
+      "name_en": "Trigonometric Equations",
+      "name_ar": "المعادلات المثلثية",
+      "icon": "✖️",
+      "lessons": [
+        {"name_he": "דף עזר", "name_en": "Cheat Sheet", "name_ar": "ورقة مساعدة"},
+        {"name_he": "מבוא", "name_en": "Introduction", "name_ar": "مقدّمة"},
+        {"name_he": "בסיס: משוואות סביב סינוס", "name_en": "Basic: Sine Equations", "name_ar": "أساسي: معادلات الجيب"},
+        {"name_he": "בסיס: משוואות סביב קוסינוס", "name_en": "Basic: Cosine Equations", "name_ar": "أساسي: معادلات جيب التمام"},
+        {"name_he": "בסיס: משוואות סביב טנגנס וקוטנגנס", "name_en": "Basic: Tangent & Cotangent Equations", "name_ar": "أساسي: معادلات الظل وظل التمام"},
+        {"name_he": "המרה מפונקציה לפונקציה", "name_en": "Converting Between Functions", "name_ar": "التحويل من دالة إلى أخرى"},
+        {"name_he": "פירוק לגורמים", "name_en": "Factoring", "name_ar": "التحليل إلى عوامل"},
+        {"name_he": "משוואה ריבועית", "name_en": "Quadratic Equation", "name_ar": "معادلة تربيعية"},
+        {"name_he": "לפי זהויות סכום והפרש זוויות", "name_en": "Using Angle Sum/Difference Identities", "name_ar": "حسب متطابقات مجموع وفرق الزوايا"},
+        {"name_he": "זווית כפולה cos2x , sin2x", "name_en": "Double Angle: cos2x, sin2x", "name_ar": "الزاوية المضاعفة: cos2x و sin2x"},
+        {"name_he": "לפי סכום והפרש פונקציות", "name_en": "Using Sum/Difference of Functions", "name_ar": "حسب مجموع وفرق الدوال"},
+        {"name_he": "מעבר מכפל לחיבור/חיסור", "name_en": "Product to Sum/Difference", "name_ar": "التحويل من الضرب إلى الجمع/الطرح"},
+        {"name_he": "לפי זהויות של חצי זווית", "name_en": "Half-Angle Identities", "name_ar": "حسب متطابقات نصف الزاوية"},
+        {"name_he": "משוואה הומוגנית ממעלה שנייה", "name_en": "Second-Degree Homogeneous Equation", "name_ar": "معادلة متجانسة من الدرجة الثانية"},
+        {"name_he": "asinx+bcosx=m", "name_en": "a sin x + b cos x = m", "name_ar": "a sin x + b cos x = m"},
+        {"name_he": "משוואה עם מכנה", "name_en": "Equation with a Denominator", "name_ar": "معادلة مع مقام"}
+      ]
+    },
+    {
+      "name_he": "משפט הסינוסים",
+      "name_en": "Law of Sines",
+      "name_ar": "قانون الجيب",
+      "icon": "🅰️",
+      "lessons": [
+        {"name_he": "הכרות", "name_en": "Introduction", "name_ar": "مقدّمة"},
+        {"name_he": "בעיות בסיסיות", "name_en": "Basic Problems", "name_ar": "مسائل أساسية"},
+        {"name_he": "תרגילים משאלוני בגרות", "name_en": "Exercises from Bagrut Exams", "name_ar": "تمارين من امتحانات البجروت"}
+      ]
+    },
+    {
+      "name_he": "משפט הקוסינוסים",
+      "name_en": "Law of Cosines",
+      "name_ar": "قانون جيب التمام",
+      "icon": "🧭",
+      "lessons": [
+        {"name_he": "הכרות", "name_en": "Introduction", "name_ar": "مقدّمة"},
+        {"name_he": "מבגרות 3 יח\"ל", "name_en": "From 3-Unit Bagrut", "name_ar": "من بجروت 3 وحدات"},
+        {"name_he": "מבגרות 4 יח\"ל", "name_en": "From 4-Unit Bagrut", "name_ar": "من بجروت 4 وحدات"}
+      ]
+    },
+    {
+      "name_he": "תכונות במשולש",
+      "name_en": "Triangle Properties",
+      "name_ar": "خصائص في المثلث",
+      "icon": "🔍",
+      "lessons": [
+        {"name_he": "לפי זוויות", "name_en": "By Angles", "name_ar": "حسب الزوايا"},
+        {"name_he": "לפי צלעות", "name_en": "By Sides", "name_ar": "حسب الأضلاع"}
+      ]
+    }
+  ]
+}

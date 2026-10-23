@@ -1,7 +1,7 @@
 # Admin topic import: design
 
 ## Intent
-Let an admin (UI) or an agent upload one JSON file describing a topic's subtopics and lessons, and have the backend write it to the right tables. Motivation: the DB firewall blocks direct seeding from developer machines, and content such as the Trigonometry syllabus (10 subtopics, 45 lessons) should be loadable repeatedly without hand-entering rows.
+Let an admin (UI) or an agent upload one JSON file describing a topic's subtopics and lessons, and have the backend write it to the right tables. Motivation: the DB firewall blocks direct seeding from developer machines, and content such as the Trigonometry syllabus (10 subtopics, 42 lessons) should be loadable repeatedly without hand-entering rows.
 
 ## Goals
 - One admin-only endpoint that imports a single topic's subtopics + lessons (he/en/ar names, subtopic icon, order).

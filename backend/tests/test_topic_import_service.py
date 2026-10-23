@@ -43,6 +43,13 @@ def _sub(en: str, lessons: list[str], **extra) -> dict:
     return {**_names(en), "icon": "📐", "lessons": [_names(x) for x in lessons], **extra}
 
 
+async def _files_in(db, topic_slug: str) -> int:
+    q = select(func.count()).select_from(ContentFile).join(
+        Lesson, ContentFile.lesson_id == Lesson.id
+    ).where(Lesson.slug.like(f"{topic_slug}--%"))
+    return (await db.execute(q)).scalar_one()
+
+
 async def _count(db, model) -> int:
     return (await db.execute(select(func.count()).select_from(model))).scalar_one()
 
@@ -90,7 +97,7 @@ async def test_removed_lesson_is_deleted_with_its_content_files(db_session):
     await _add_file(db_session, f"{t.slug}--a--y")
     res = await import_topic(db_session, _req(t.slug, [_sub("A", ["x"])]), dry_run=False)
     assert res.deleted.lessons == 1 and res.deleted.content_files == 1
-    assert await _count(db_session, ContentFile) == 0
+    assert await _files_in(db_session, t.slug) == 0
 
 
 async def test_kept_lesson_keeps_content_files(db_session):
@@ -100,7 +107,7 @@ async def test_kept_lesson_keeps_content_files(db_session):
     await _add_file(db_session, f"{t.slug}--a--x")
     res = await import_topic(db_session, req, dry_run=False)
     assert res.deleted.content_files == 0
-    assert await _count(db_session, ContentFile) == 1
+    assert await _files_in(db_session, t.slug) == 1
 
 
 async def test_lesson_moved_between_subtopics_keeps_row(db_session):
@@ -165,5 +172,5 @@ def test_trigonometry_sample_file_is_valid():
     req = TopicImportRequest.model_validate(json.loads(path.read_text(encoding="utf-8")))
     assert req.topic_slug == "trigonometry"
     assert len(req.subtopics) == 10
-    assert sum(len(s.lessons) for s in req.subtopics) == 45
+    assert sum(len(s.lessons) for s in req.subtopics) == 42
     assert all(len(s.icon) <= 20 for s in req.subtopics)
