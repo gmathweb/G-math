@@ -1035,8 +1035,8 @@ Bulk-load a topic's subtopics and lessons from one JSON file. Used by the admin 
 **Agent flow**
 
 ```bash
-TOKEN=$(curl -s -X POST "$HOST/api/v1/auth/login" \
-  -d "username=$EMAIL&password=$PASSWORD" | jq -r .access_token)
+TOKEN=$(curl -s -X POST "$HOST/api/v1/auth/login" -H "Content-Type: application/json" \
+  -d "{\"email\":\"$EMAIL\",\"password\":\"$PASSWORD\"}" | jq -r .access_token)
 
 # 1. Preview (default; nothing is written)
 curl -s -X POST "$HOST/api/v1/admin/import/topic" \
