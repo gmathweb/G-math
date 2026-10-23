@@ -2,79 +2,75 @@ import type { Ref } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import type { PublicLessonSummary } from '../../types';
+import { Icon } from '../ui/Icon';
 
 interface LessonToolbarProps {
   lessons: readonly PublicLessonSummary[];
   index: number;
   basePath: string;
+  /** Where the last lesson's "next" leads (the subtopic's lesson list). */
+  doneTo: string;
+  /** The lessons dialog button only exists where the persistent sidebar does not. */
+  showLessonsButton: boolean;
   drawerId: string;
   drawerOpen: boolean;
   onOpenDrawer: () => void;
   toggleRef: Ref<HTMLButtonElement>;
 }
 
-/** Arrow pointing "back" in the reading direction; CSS mirrors it for RTL and for "next". */
-function Arrow({ next = false }: { next?: boolean }) {
-  return (
-    <svg className={next ? 'nb-arrow nb-arrow-next' : 'nb-arrow'} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
-    </svg>
-  );
-}
-
-/** Mockup lesson toolbar (.vc): previous/next lesson within the subtopic, position and the lessons drawer toggle. */
+/** Lesson navigation: previous/next lesson with visible names and, below desktop width, the lessons dialog toggle. */
 export function LessonToolbar({
-  lessons, index, basePath, drawerId, drawerOpen, onOpenDrawer, toggleRef,
+  lessons, index, basePath, doneTo, showLessonsButton, drawerId, drawerOpen, onOpenDrawer, toggleRef,
 }: LessonToolbarProps) {
   const { t } = useTranslation();
   const previous = index > 0 ? lessons[index - 1] : undefined;
   const next = index < lessons.length - 1 ? lessons[index + 1] : undefined;
 
   return (
-    <div className="vc">
-      <nav className="pn-row" aria-label={t('tree.lessonNavigation')}>
-        {previous ? (
-          <Link className="nb" to={`${basePath}/${previous.slug}`} title={previous.name}>
-            <Arrow />
+    <nav className="lesson-nav" aria-label={t('tree.lessonNavigation')}>
+      {previous ? (
+        <Link className="btn btn--secondary nb nb--prev" to={`${basePath}/${previous.slug}`} title={previous.name}>
+          <Icon name="arrow-start" />
+          <span className="nb-text">
             <span className="nb-label">{t('tree.previousLesson')}</span>
-          </Link>
-        ) : (
-          <span className="nb" role="link" aria-disabled="true">
-            <Arrow />
-            <span className="nb-label">{t('tree.previousLesson')}</span>
+            <bdi className="nb-name">{previous.name}</bdi>
           </span>
-        )}
-        <span className="nc">
-          <span className="sr-only">{t('tree.lessonPosition', { current: index + 1, total: lessons.length })}</span>
-          <span dir="ltr" aria-hidden="true">{index + 1} / {lessons.length}</span>
-        </span>
-        {next ? (
-          <Link className="nb" to={`${basePath}/${next.slug}`} title={next.name}>
-            <span className="nb-label">{t('tree.nextLesson')}</span>
-            <Arrow next />
-          </Link>
-        ) : (
-          <span className="nb" role="link" aria-disabled="true">
-            <span className="nb-label">{t('tree.nextLesson')}</span>
-            <Arrow next />
-          </span>
-        )}
-      </nav>
-      <div className="va">
+        </Link>
+      ) : (
+        <button type="button" className="btn btn--secondary nb nb--prev" disabled>
+          <Icon name="arrow-start" />
+          <span className="nb-text"><span className="nb-label">{t('tree.previousLesson')}</span></span>
+        </button>
+      )}
+      {showLessonsButton && (
         <button
           ref={toggleRef}
           type="button"
-          className="ls-btn"
+          className="btn btn--secondary nb-lessons"
           aria-haspopup="dialog"
           aria-expanded={drawerOpen}
           aria-controls={drawerId}
           onClick={onOpenDrawer}
         >
-          <span aria-hidden="true">📋</span>
-          {t('tree.lessonsButton')}
-          <span className="ls-count">({lessons.length})</span>
+          <Icon name="list" />
+          <span className="nb-lessons-label">{t('tree.lessonsButton')}</span>
+          <span className="ls-count">{lessons.length}</span>
         </button>
-      </div>
-    </div>
+      )}
+      {next ? (
+        <Link className="btn btn--primary nb nb--next" to={`${basePath}/${next.slug}`} title={next.name}>
+          <span className="nb-text">
+            <span className="nb-label">{t('tree.nextLesson')}</span>
+            <bdi className="nb-name">{next.name}</bdi>
+          </span>
+          <Icon name="arrow-end" />
+        </Link>
+      ) : (
+        <Link className="btn btn--primary nb nb--next" to={doneTo}>
+          <span className="nb-text"><span className="nb-label">{t('tree.lastLessonDone')}</span></span>
+          <Icon name="list" />
+        </Link>
+      )}
+    </nav>
   );
 }

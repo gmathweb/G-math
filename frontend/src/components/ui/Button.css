@@ -1,0 +1,41 @@
+/* Shared button system (primary / secondary / ghost) for the lesson chrome. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: 44px;
+  padding: var(--sp-2) var(--sp-4);
+  border: 1px solid transparent;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color .15s var(--ease), border-color .15s var(--ease), color .15s var(--ease),
+    box-shadow .15s var(--ease), transform .1s var(--ease);
+}
+.btn:active:not(:disabled):not([aria-disabled="true"]) { transform: scale(.98); }
+.btn .icon { flex-shrink: 0; }
+
+.btn--primary { background: var(--g-blue); border-color: var(--g-blue); color: #fff; }
+.btn--primary:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--g-blue-hover); border-color: var(--g-blue-hover); }
+
+.btn--secondary { background: var(--bg); border-color: var(--bd); color: var(--tp); }
+.btn--secondary:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--g-blue-wash); border-color: var(--g-blue); color: var(--g-blue); }
+
+.btn--ghost { color: var(--g-blue); }
+.btn--ghost:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--g-blue-light); }
+
+.btn--icon { width: 44px; padding: 0; }
+
+.btn:disabled,
+.btn[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+
+/* Directional icons are drawn for LTR and flip under dir="rtl". */
+[dir="rtl"] .icon-dir { transform: scaleX(-1); }
