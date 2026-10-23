@@ -4,24 +4,13 @@
 
 .lesson-page { flex: 1; display: flex; flex-direction: column; width: 100%; max-width: 1680px; margin-inline: auto; }
 
-/* The head, tabs and stage fill the viewport below the sticky header; materials and footer sit below the fold. */
-.lesson-screen { flex: none; display: flex; flex-direction: column; min-height: calc(100dvh - var(--hdr-h)); }
+/* The head and stage fit the viewport below the sticky header exactly — the lesson needs no
+   page scrolling; only the materials section sits below the fold. */
+.lesson-screen { flex: none; display: flex; flex-direction: column; height: calc(100dvh - var(--hdr-h)); }
 
 /* ─── Header zone ─── */
 .lesson-head { display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-1) 28px var(--sp-2); }
-/* Stays pinned under the app header while scrolling to the materials below the fold. */
-.lh-top {
-  position: sticky;
-  top: var(--hdr-h);
-  z-index: 30;
-  display: flex;
-  align-items: center;
-  gap: var(--sp-3);
-  min-width: 0;
-  padding: var(--sp-2) 28px;
-  background: var(--bg);
-  border-bottom: 1px solid var(--bd);
-}
+.lh-top { display: flex; align-items: center; gap: var(--sp-3); min-width: 0; padding: var(--sp-2) 28px; border-bottom: 1px solid var(--bd); }
 .lh-back { flex-shrink: 0; max-width: min(280px, 45%); min-height: 40px; padding-block: 6px; }
 .lh-back-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
@@ -50,7 +39,7 @@
 .nb-lessons .ls-count { background: var(--bg2); }
 
 /* ─── Body: sidebar + stage ─── */
-.lesson-body { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: var(--sp-4); min-height: 480px; padding: var(--sp-2) 28px var(--sp-5); }
+.lesson-body { flex: 1; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); gap: var(--sp-4); min-height: 0; padding: var(--sp-2) 28px var(--sp-4); }
 .lesson-body--side { grid-template-columns: var(--side-w) minmax(0, 1fr); }
 .lesson-body--rail { grid-template-columns: 64px minmax(0, 1fr); }
 .lesson-main { display: flex; flex-direction: column; gap: var(--sp-2); min-width: 0; min-height: 0; }
@@ -185,7 +174,7 @@
 
 @media (max-width: 600px) {
   .lesson-head, .lesson-body, .lesson-materials, .lh-top { padding-inline: 12px; }
-  .lesson-body { min-height: 420px; gap: var(--sp-2); }
+  .lesson-body { gap: var(--sp-2); }
   .lh-top { gap: var(--sp-2); }
   .lh-back { max-width: 55%; }
   .lh-title h1 { font-size: 1.25rem; }
@@ -214,11 +203,6 @@
 
 @media (max-width: 480px) {
   .nb-name { display: none; }
-}
-
-/* Short laptop viewports: keep the stage usable and let the page scroll instead of squeezing it. */
-@media (max-height: 700px) {
-  .lesson-body { min-height: 520px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
