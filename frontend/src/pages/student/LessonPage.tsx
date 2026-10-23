@@ -243,10 +243,13 @@ export function LessonPage() {
                 basePath={subtopicPath}
                 collapsed={sidebarCollapsed}
                 onToggle={toggleSidebar}
+                presentations={presentations}
+                activePresentationId={active?.id}
+                presentationHref={presentationHref}
               />
             )}
             <div className="lesson-main">
-              {presentations.length > 1 && (
+              {presentations.length > 1 && !showSidebar && (
                 <nav className="lesson-tabs" aria-label={t('lesson.navigation')}>
                   {presentations.map(file => (
                     <Link

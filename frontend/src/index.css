@@ -29,7 +29,7 @@
   --g-blue-wash: #F1F7FD;
   --g-green-light: #E8F5E9;
   --g-green-dark: #2E7D32;
-  --stage-bg: #1f2430;
+  --stage-bg: #fff;
   --side-w: clamp(260px, 22vw, 340px);
   --ease: cubic-bezier(.2, 0, 0, 1);
 

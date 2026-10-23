@@ -15,7 +15,7 @@
   color: var(--tp);
 }
 
-/* Dark neutral letterbox: whatever the slide does not cover reads as "on stage". */
+/* Light stage: the slide fills the whole section, no dark letterbox. */
 .presentation-stage { position: relative; grid-column: 1; grid-row: 1; min-width: 0; min-height: 0; background: var(--stage-bg); }
 .presentation-stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: transparent; }
 
@@ -76,7 +76,7 @@
 .presentation-viewer .btn--primary:focus-visible { outline-color: #fff; box-shadow: 0 0 0 3px var(--g-blue); }
 
 .presentation-loading, .presentation-unsupported { position: absolute; inset: 0; display: grid; align-content: center; justify-items: center; gap: var(--sp-4); padding: var(--sp-5); text-align: center; }
-.presentation-loading { z-index: 1; background: var(--stage-bg); color: #e8ecf3; pointer-events: none; }
+.presentation-loading { z-index: 1; background: var(--stage-bg); color: var(--ts); pointer-events: none; }
 .presentation-unsupported { background: var(--bg); }
 .presentation-unsupported a { padding: 10px 16px; border-radius: var(--r-sm); background: var(--g-blue); color: #fff; }
 .presentation-unsupported a:hover { background: var(--g-blue-hover); }
