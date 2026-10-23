@@ -11,6 +11,7 @@ const navItems: NavItem[] = [
   { to: '/admin/hero', label: 'hero', icon: '🖼️' },
   { to: '/admin/home-content', label: 'homeContent', icon: '🏠' },
   { to: '/admin/files', label: 'files', icon: '📁' },
+  { to: '/admin/import', label: 'importTopic', icon: '📥' },
   { to: '/admin/settings', label: 'settings', icon: '⚙️' },
 ];
 

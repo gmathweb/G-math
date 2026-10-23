@@ -1028,6 +1028,49 @@ Authorization: Bearer <jwt_token>
 
 Get a token from `POST /api/v1/auth/login`.
 
+## Topic Import (Admin)
+
+Bulk-load a topic's subtopics and lessons from one JSON file. Used by the admin **Import content** page (`/admin/import`) and by agents.
+
+**Agent flow**
+
+```bash
+TOKEN=$(curl -s -X POST "$HOST/api/v1/auth/login" -H "Content-Type: application/json" \
+  -d "{\"email\":\"$EMAIL\",\"password\":\"$PASSWORD\"}" | jq -r .access_token)
+
+# 1. Preview (default; nothing is written)
+curl -s -X POST "$HOST/api/v1/admin/import/topic" \
+  -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+  -d @backend/seeds/imports/trigonometry.json
+
+# 2. Apply
+curl -s -X POST "$HOST/api/v1/admin/import/topic?dry_run=false" \
+  -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+  -d @backend/seeds/imports/trigonometry.json
+```
+
+**Body**
+
+```json
+{
+  "topic_slug": "trigonometry",
+  "subtopics": [
+    {
+      "slug": "optional",
+      "name_he": "...", "name_en": "...", "name_ar": "...",
+      "icon": "📐",
+      "lessons": [{ "slug": "optional", "name_he": "...", "name_en": "...", "name_ar": "..." }]
+    }
+  ]
+}
+```
+
+- `sort_order` is the array position. A missing slug is generated from `name_en` (`<topic>--<name>` for subtopics, `<subtopic-slug>--<name>` for lessons, max 100 chars).
+- **Replace semantics:** rows are matched by slug. Matching rows are updated in place and keep their content files; subtopics/lessons of the topic that are not in the file are deleted, **together with their content files**. The dry-run response reports `deleted.content_files`.
+- Everything runs in one transaction.
+- Errors: 401/403 (auth), 404 (unknown `topic_slug`), 409 (slug used by another topic), 422 (empty names, icon > 20 chars, > 100 subtopics / 500 lessons, duplicate slugs in the file).
+- Response: `{dry_run, applied, topic_slug, created, updated, deleted}` with counts of `subtopics`, `lessons` (and `content_files` for `deleted`).
+
 ## Common Error Response Format
 
 ```json
@@ -1053,4 +1096,5 @@ Get a token from `POST /api/v1/auth/login`.
 | Admin Files     | 5         | Admin    |
 | Admin Settings  | 2         | Admin    |
 | Admin Stats     | 1         | Admin    |
-| **Total**       | **35**    |          |
+| Admin Import    | 1         | Admin    |
+| **Total**       | **36**    |          |

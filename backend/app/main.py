@@ -25,6 +25,7 @@ from app.api.admin.users import router as admin_users_router
 from app.api.admin.files import router as admin_files_router
 from app.api.admin.settings import router as admin_settings_router
 from app.api.admin.stats import router as admin_stats_router
+from app.api.admin.import_topic import router as admin_import_router
 
 
 def create_app() -> FastAPI:
@@ -66,6 +67,7 @@ def create_app() -> FastAPI:
     app.include_router(admin_files_router)
     app.include_router(admin_settings_router)
     app.include_router(admin_stats_router)
+    app.include_router(admin_import_router)
 
     @app.get("/api/v1/health")
     async def health(db: AsyncSession = Depends(get_db)):

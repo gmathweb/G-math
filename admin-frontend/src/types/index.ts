@@ -73,3 +73,29 @@ export interface AppSettings {
   site: SiteSettings;
   design: DesignSettings;
 }
+
+export interface ImportLesson {
+  slug?: string;
+  name_he: string;
+  name_en: string;
+  name_ar: string;
+}
+
+export interface ImportSubtopic extends ImportLesson {
+  icon?: string;
+  lessons?: ImportLesson[];
+}
+
+export interface TopicImportRequest {
+  topic_slug: string;
+  subtopics: ImportSubtopic[];
+}
+
+export interface TopicImportResult {
+  dry_run: boolean;
+  applied: boolean;
+  topic_slug: string;
+  created: { subtopics: number; lessons: number };
+  updated: { subtopics: number; lessons: number };
+  deleted: { subtopics: number; lessons: number; content_files: number };
+}

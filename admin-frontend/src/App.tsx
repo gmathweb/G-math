@@ -13,6 +13,7 @@ import LessonsPage from './pages/LessonsPage';
 import HeroPage from './pages/HeroPage';
 import HomeContentPage from './pages/HomeContentPage';
 import FilesPage from './pages/FilesPage';
+import ImportPage from './pages/ImportPage';
 import SettingsPage from './pages/SettingsPage';
 import LoginPage from './pages/LoginPage';
 
@@ -41,6 +42,7 @@ export default function App() {
               <Route path="hero" element={<HeroPage />} />
               <Route path="home-content" element={<HomeContentPage />} />
               <Route path="files" element={<FilesPage />} />
+              <Route path="import" element={<ImportPage />} />
               <Route path="settings" element={<SettingsPage />} />
             </Route>
           </Routes>
