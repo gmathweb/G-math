@@ -1,0 +1,209 @@
+{
+  "topic_slug": "analytic",
+  "subtopics": [
+    {
+      "name_he": "מערכת צירים (כל הרמות)",
+      "name_en": "Coordinate Axes System (All Levels)",
+      "name_ar": "نظام المحاور (جميع المستويات)",
+      "icon": "🗺️",
+      "lessons": [
+        {
+          "name_he": "מערכת צירים",
+          "name_en": "Coordinate Axes System",
+          "name_ar": "نظام المحاور"
+        },
+        {
+          "name_he": "אורך קטע המקביל לאחד הצירים",
+          "name_en": "Length of a Segment Parallel to an Axis",
+          "name_ar": "طول قطعة موازية لأحد المحورين"
+        },
+        {
+          "name_he": "שטחים",
+          "name_en": "Areas",
+          "name_ar": "المساحات"
+        }
+      ]
+    },
+    {
+      "name_he": "נקודת האמצע בקטע (כל הרמות)",
+      "name_en": "Midpoint of a Segment (All Levels)",
+      "name_ar": "نقطة منتصف القطعة (جميع المستويات)",
+      "icon": "🎯",
+      "lessons": [
+        {
+          "name_he": "נקודת האמצע",
+          "name_en": "Midpoint",
+          "name_ar": "نقطة المنتصف"
+        }
+      ]
+    },
+    {
+      "name_he": "נקודה",
+      "name_en": "Point",
+      "name_ar": "النقطة",
+      "icon": "📍",
+      "lessons": [
+        {
+          "name_he": "במערכת צירים",
+          "name_en": "In a Coordinate System",
+          "name_ar": "في نظام المحاور"
+        },
+        {
+          "name_he": "מרחק בין נקודות",
+          "name_en": "Distance Between Points",
+          "name_ar": "المسافة بين نقطتين"
+        },
+        {
+          "name_he": "נקודת אמצע",
+          "name_en": "Midpoint",
+          "name_ar": "نقطة المنتصف"
+        },
+        {
+          "name_he": "חלוקת קטע ביחס נתון",
+          "name_en": "Dividing a Segment in a Given Ratio",
+          "name_ar": "تقسيم قطعة بنسبة معطاة"
+        },
+        {
+          "name_he": "שטח משולש לפי קדקודיו",
+          "name_en": "Triangle Area from Its Vertices",
+          "name_ar": "مساحة المثلث بدلالة رؤوسه"
+        }
+      ]
+    },
+    {
+      "name_he": "הקו הישר",
+      "name_en": "The Straight Line",
+      "name_ar": "المستقيم",
+      "icon": "📏",
+      "lessons": [
+        {
+          "name_he": "הכרות",
+          "name_en": "Introduction",
+          "name_ar": "تعارف"
+        },
+        {
+          "name_he": "שיפוע ישר",
+          "name_en": "Slope of a Line",
+          "name_ar": "ميل المستقيم"
+        },
+        {
+          "name_he": "בין ישרים: גרף ומשוואה",
+          "name_en": "Between Lines: Graph and Equation",
+          "name_ar": "بين المستقيمات: الرسم والمعادلة"
+        },
+        {
+          "name_he": "משוואה מפורשת",
+          "name_en": "Explicit Equation",
+          "name_ar": "المعادلة الصريحة"
+        },
+        {
+          "name_he": "מרחק נקודה מישר",
+          "name_en": "Distance from a Point to a Line",
+          "name_ar": "المسافة من نقطة إلى مستقيم"
+        },
+        {
+          "name_he": "מרכז מעגל חסום",
+          "name_en": "Center of an Inscribed Circle",
+          "name_ar": "مركز الدائرة المحاطة"
+        },
+        {
+          "name_he": "זווית בין ישרים",
+          "name_en": "Angle Between Lines",
+          "name_ar": "الزاوية بين مستقيمين"
+        }
+      ]
+    },
+    {
+      "name_he": "מעגל",
+      "name_en": "Circle",
+      "name_ar": "الدائرة",
+      "icon": "⭕",
+      "lessons": [
+        {
+          "name_he": "משוואת מעגל",
+          "name_en": "Equation of a Circle",
+          "name_ar": "معادلة الدائرة"
+        },
+        {
+          "name_he": "משיק",
+          "name_en": "Tangent",
+          "name_ar": "المماس"
+        },
+        {
+          "name_he": "תנאי השקה",
+          "name_en": "Tangency Conditions",
+          "name_ar": "شروط التماس"
+        }
+      ]
+    },
+    {
+      "name_he": "פרבולה",
+      "name_en": "Parabola",
+      "name_ar": "القطع المكافئ",
+      "icon": "🌈",
+      "lessons": [
+        {
+          "name_he": "משוואת פרבולה",
+          "name_en": "Equation of a Parabola",
+          "name_ar": "معادلة القطع المكافئ"
+        }
+      ]
+    },
+    {
+      "name_he": "היפרבולה",
+      "name_en": "Hyperbola",
+      "name_ar": "القطع الزائد",
+      "icon": "🔀",
+      "lessons": [
+        {
+          "name_he": "הכרות",
+          "name_en": "Introduction",
+          "name_ar": "تعارف"
+        },
+        {
+          "name_he": "תכונות",
+          "name_en": "Properties",
+          "name_ar": "الخصائص"
+        }
+      ]
+    },
+    {
+      "name_he": "מקום גאומטרי",
+      "name_en": "Locus",
+      "name_ar": "المحل الهندسي",
+      "icon": "🧩",
+      "lessons": [
+        {
+          "name_he": "מבוא",
+          "name_en": "Introduction",
+          "name_ar": "مقدمة"
+        },
+        {
+          "name_he": "ישר",
+          "name_en": "Line",
+          "name_ar": "المستقيم"
+        },
+        {
+          "name_he": "מעגל",
+          "name_en": "Circle",
+          "name_ar": "الدائرة"
+        },
+        {
+          "name_he": "אליפסה",
+          "name_en": "Ellipse",
+          "name_ar": "القطع الناقص"
+        },
+        {
+          "name_he": "היפרבולה",
+          "name_en": "Hyperbola",
+          "name_ar": "القطع الزائد"
+        },
+        {
+          "name_he": "פרבולה",
+          "name_en": "Parabola",
+          "name_ar": "القطع المكافئ"
+        }
+      ]
+    }
+  ]
+}
