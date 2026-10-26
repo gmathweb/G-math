@@ -52,6 +52,15 @@ export default function PresentationManager({ lesson, onClose }: { lesson: Lesso
     await act(() => reorder.mutateAsync({ lessonId: lesson.id, fileIds: ids }));
   }
 
+  async function placeAt(uploaded: UploadedFile, position: number) {
+    if (position > presentations.length) return;
+    const ids = files.map(item => item.id).filter(fileId => fileId !== uploaded.id);
+    const anchor = presentations[position - 1];
+    const at = anchor ? ids.indexOf(anchor.id) : -1;
+    ids.splice(at >= 0 ? at : ids.length, 0, uploaded.id);
+    await act(() => reorder.mutateAsync({ lessonId: lesson.id, fileIds: ids }));
+  }
+
   return (
     <Modal open wide fitHeight={!!preview} title={`מצגות: ${lesson.name.he}`} closeDisabled={busy}
       onClose={() => { if (!busy) onClose(); }}>
@@ -67,7 +76,8 @@ export default function PresentationManager({ lesson, onClose }: { lesson: Lesso
           <>
             <section className="rounded-xl border border-[var(--bd)] p-4">
               <h3 className="font-semibold mb-3">הוספת מצגת לשיעור</h3>
-              <FileUploadForm lessonId={lesson.id} presentationsOnly onBusyChange={setUploading} />
+              <FileUploadForm lessonId={lesson.id} presentationsOnly presentationCount={presentations.length}
+                onBusyChange={setUploading} onUploaded={(uploaded, position) => placeAt(uploaded, position)} />
             </section>
             <section aria-label="מצגות השיעור">
               <h3 className="font-semibold mb-3">מצגות השיעור ({presentations.length})</h3>
